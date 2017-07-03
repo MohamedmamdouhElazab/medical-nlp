@@ -1,0 +1,4191 @@
+# Colors
+# Example to add "COLOR" as ner tag, and hex RGB code as the normalized tag for strings matching a color
+
+# Case insensitive pattern matching (see java.util.regex.Pattern flags)
+ENV.defaultStringPatternFlags = 2
+
+# Map variable names to annotation keys
+ner = { type: "CLASS", value: "edu.stanford.nlp.ling.CoreAnnotations$NamedEntityTagAnnotation" }
+normalized = { type: "CLASS", value: "edu.stanford.nlp.ling.CoreAnnotations$NormalizedNamedEntityTagAnnotation" }
+tokens = { type: "CLASS", value: "edu.stanford.nlp.ling.CoreAnnotations$TokensAnnotation" }
+
+# Create OR pattern of
+#  regular expression over tokens to hex RGB code
+#  for colors and save it in a variable
+
+$S0 = (
+uncoordination => "0.0477" | 
+pleuritic pain => "0.0477" | 
+snuffle => "0.0477" | 
+throat sore => "0.0477" | 
+malaise => "0.0477" | 
+debilitation => "0.0477" | 
+symptom aggravating factors => "0.0477" | 
+chill => "0.0477" | 
+scleral icterus => "0.0477" | 
+nasal flaring => "0.0477" | 
+dysuria => "0.0477" | 
+lip smacking => "0.0477" | 
+headache => "0.0477" | 
+sneeze => "0.0477" | 
+snore => "0.0477" | 
+green sputum => "0.0477" | 
+shortness of breath => "0.0477" | 
+distress respiratory => "0.0477" | 
+blackout => "0.0477" | 
+extreme exhaustion => "0.0477" 
+)
+$S1 = (
+heme positive => "0.0834" | 
+pain abdominal => "0.0834" | 
+vomiting => "0.0834" | 
+disequilibrium => "0.0834" | 
+nausea => "0.0834" | 
+intoxication => "0.0834" | 
+haemorrhage => "0.0834" | 
+guaiac positive => "0.0834" | 
+pain => "0.0834" | 
+decreased body weight => "0.0834" | 
+sore to touch => "0.0834" | 
+dizziness => "0.0834" 
+)
+$S2 = (
+pain => "0.0667" | 
+pain chest => "0.0667" | 
+sweat => "0.0667" | 
+sweating increased => "0.0667" | 
+nonsmoker => "0.0667" | 
+pressure chest => "0.0667" | 
+syncope => "0.0667" | 
+numbness => "0.0667" | 
+chest discomfort => "0.0667" | 
+shortness of breath => "0.0667" | 
+st segment depression => "0.0667" | 
+worry => "0.0667" | 
+t wave inverted => "0.0667" | 
+bradycardia => "0.0667" | 
+dyspnea => "0.0667"  
+)
+$S3 = (
+seizure => "0.077" | 
+hypometabolism => "0.077" | 
+aura => "0.077" | 
+muscle twitch => "0.077" | 
+drowsiness => "0.077" | 
+tremor => "0.077" | 
+unresponsiveness => "0.077" | 
+hemiplegia => "0.077" | 
+myoclonus => "0.077" | 
+gurgle => "0.077" | 
+sleepy => "0.077" | 
+lethargy => "0.077" | 
+wheelchair bound => "0.077"  
+)
+$S4 = (
+shortness of breath => "0.0589" | 
+hyperkalemia => "0.0589" | 
+orthopnea => "0.0589" | 
+rale => "0.0589" | 
+urgency of micturition => "0.0589" | 
+ascites => "0.0589" | 
+guaiac positive => "0.0589" | 
+asthenia => "0.0589" | 
+apyrexial => "0.0589" | 
+mental status changes => "0.0589" | 
+dyspnea => "0.0589" | 
+difficulty => "0.0589" | 
+diarrhea => "0.0589" | 
+hypotension => "0.0589" | 
+breath sounds decreased => "0.0589" | 
+swelling => "0.0589" | 
+hypokinesia => "0.0589" 
+)
+$S5 = (
+fever => "0.0589" | 
+diarrhea => "0.0589" | 
+vomiting => "0.0589" | 
+hypotension => "0.0589" | 
+nausea => "0.0589" | 
+lightheadedness => "0.0589" | 
+unwell => "0.0589" | 
+mental status changes => "0.0589" | 
+anorexia => "0.0589" | 
+asthenia => "0.0589" | 
+sensory discomfort => "0.0589" | 
+syncope => "0.0589" | 
+lethargy => "0.0589" | 
+dizziness => "0.0589" | 
+syncope => "0.0589" | 
+blackout => "0.0589" | 
+history of  blackout => "0.0589"  
+)
+$S6 = (
+shortness of breath => "0.0435" | 
+prostatism => "0.0435" | 
+drowsiness => "0.0435" | 
+sleepy => "0.0435" | 
+hyponatremia => "0.0435" | 
+fall => "0.0435" | 
+unsteady gait => "0.0435" | 
+polyuria => "0.0435" | 
+hypotension => "0.0435" | 
+difficulty => "0.0435" | 
+syncope => "0.0435" | 
+nightmare => "0.0435" | 
+speech slurred => "0.0435" | 
+weight gain => "0.0435" | 
+asthenia => "0.0435" | 
+fatigue => "0.0435" | 
+tired => "0.0435" | 
+agitation => "0.0435" | 
+mental status changes => "0.0435" | 
+motor retardation => "0.0435" | 
+vomiting => "0.0435" | 
+numbness => "0.0435" | 
+mass of body structure => "0.0435" 
+)
+$S7 = (
+pain abdominal => "0.0667" | 
+fatigability => "0.0667" | 
+prodrome => "0.0667" | 
+vomiting => "0.0667" | 
+nausea => "0.0667" | 
+myalgia => "0.0667" | 
+hyponatremia => "0.0667" | 
+sore to touch => "0.0667" | 
+general discomfort => "0.0667" | 
+dyspnea on exertion => "0.0667" | 
+asterixis => "0.0667" | 
+guaiac positive => "0.0667" | 
+numbness of hand => "0.0667" | 
+headache => "0.0667" | 
+photophobia => "0.0667" 
+)
+$S8 = (
+para 2 => "0.077" | 
+haemorrhage => "0.077" | 
+abortion => "0.077" | 
+intermenstrual heavy bleeding => "0.077" | 
+muscle hypotonia => "0.077" | 
+hypotonic => "0.077" | 
+previous pregnancies 2 => "0.077" | 
+shortness of breath => "0.077" | 
+fever => "0.077" | 
+heartburn => "0.077" | 
+primigravida => "0.077" | 
+abnormally hard consistency => "0.077" | 
+proteinemia => "0.077" 
+)
+$S9 = (
+paresthesia => "0.0667" | 
+titubation => "0.0667" | 
+dysarthria => "0.0667" | 
+painful swallowing => "0.0667" | 
+hoarseness => "0.0667" | 
+stridor => "0.0667" | 
+spasm => "0.0667" | 
+asthenia => "0.0667" | 
+dysdiadochokinesia => "0.0667" | 
+ataxia => "0.0667" | 
+achalasia => "0.0667" | 
+decreased body weight => "0.0667" | 
+stiffness => "0.0667" | 
+lesion => "0.0667" | 
+side pain => "0.0667"  
+)
+$S10 = (
+prostatism => "0.0715" | 
+fall => "0.0715" | 
+hirsutism => "0.0715" | 
+sniffle => "0.0715" | 
+distended abdomen => "0.0715" | 
+vertigo => "0.0715" | 
+numbness of hand => "0.0715" | 
+bradykinesia => "0.0715" | 
+pain => "0.0715" | 
+syncope => "0.0715" | 
+out of breath => "0.0715" | 
+apyrexial => "0.0715" | 
+urge incontinence => "0.0715" | 
+lightheadedness => "0.0715"  
+)
+$S11 = (
+tremor => "0.0667" | 
+hallucinations auditory => "0.0667" | 
+suicidal => "0.0667" | 
+hoard => "0.0667" | 
+irritable mood => "0.0667" | 
+feeling hopeless => "0.0667" | 
+feeling suicidal => "0.0667" | 
+neologism => "0.0667" | 
+seizure => "0.0667" | 
+homelessness => "0.0667" | 
+sleeplessness => "0.0667" | 
+unconscious state => "0.0667" | 
+panic => "0.0667" | 
+breath sounds decreased => "0.0667" | 
+shortness of breath => "0.0667"  
+)
+$S12 = (
+wheezing => "0.1112" | 
+cough => "0.1112" | 
+shortness of breath => "0.1112" | 
+chest tightness => "0.1112" | 
+non productive cough => "0.1112" | 
+pleuritic pain => "0.1112" | 
+productive cough => "0.1112" | 
+symptom aggravating factors => "0.1112" | 
+distress respiratory => "0.1112"  
+)
+$S13 = (
+fever => "0.0715" | 
+distress respiratory => "0.0715" | 
+hypotension => "0.0715" | 
+tachypnea => "0.0715" | 
+chill => "0.0715" | 
+lethargy => "0.0715" | 
+bradycardia => "0.0715" | 
+breech presentation => "0.0715" | 
+cyanosis => "0.0715" | 
+spontaneous rupture of membranes => "0.0715" | 
+haemorrhage => "0.0715" | 
+unresponsiveness => "0.0715" | 
+rale => "0.0715" | 
+apyrexial => "0.0715" 
+)
+$S14 = (
+hallucinations auditory => "0.0589" | 
+hallucinations visual => "0.0589" | 
+agitation => "0.0589" | 
+irritable mood => "0.0589" | 
+verbal auditory hallucinations => "0.0589" | 
+feeling suicidal => "0.0589" | 
+suicidal => "0.0589" | 
+terrify => "0.0589" | 
+neologism => "0.0589" | 
+homelessness => "0.0589" | 
+energy increased => "0.0589" | 
+mood depressed => "0.0589" | 
+decompensation => "0.0589" | 
+cicatrisation => "0.0589" | 
+scar tissue => "0.0589" | 
+blackout => "0.0589" | 
+loose associations => "0.0589" 
+)
+$S15 = (
+abscess bacterial => "0.0667" | 
+abdomen acute => "0.0667" | 
+air fluid level => "0.0667" | 
+catching breath => "0.0667" | 
+abdominal tenderness => "0.0667" | 
+nausea => "0.0667" | 
+sore to touch => "0.0667" | 
+flatulence => "0.0667" | 
+diarrhea => "0.0667" | 
+mass of body structure => "0.0667" | 
+apyrexial => "0.0667" | 
+constipation => "0.0667" | 
+thicken => "0.0667" | 
+gravida 0 => "0.0667" | 
+pain abdominal => "0.0667" 
+)
+$S16 = (
+mass of body structure => "0.0625" | 
+lesion => "0.0625" | 
+pain chest => "0.0625" | 
+hematuria => "0.0625" | 
+tumor cell invasion => "0.0625" | 
+pain => "0.0625" | 
+anosmia => "0.0625" | 
+thicken => "0.0625" | 
+metastatic lesion => "0.0625" | 
+food intolerance => "0.0625" | 
+decreased body weight => "0.0625" | 
+night sweat => "0.0625" | 
+hemianopsia homonymous => "0.0625" | 
+satiety early => "0.0625" | 
+pain abdominal => "0.0625" | 
+headache => "0.0625" 
+)
+$S17 = (
+out of breath => "0.077" | 
+sedentary => "0.077" | 
+angina pectoris => "0.077" | 
+cough => "0.077" | 
+unhappy => "0.077" | 
+labored breathing => "0.077" | 
+hypothermiahypoglycemia => "0.077" | 
+dyspnea => "0.077" | 
+hematocrit decreased => "0.077" | 
+wheezing => "0.077" | 
+hypoxemia => "0.077" | 
+renal angle tenderness => "0.077" | 
+feels feverish => "0.077" | 
+feels hot => "0.077"
+)
+$S18 = (
+pain => "0.091" | 
+mass of body structure => "0.091" | 
+lesion => "0.091" | 
+cushingoid facies => "0.091" | 
+cushingoid habitus => "0.091" | 
+emphysematous change => "0.091" | 
+decreased body weight => "0.091" | 
+ascites => "0.091" | 
+hoarseness => "0.091" | 
+thicken => "0.091" | 
+hematuria => "0.091" 
+)
+$S19 = (
+orthopnea => "0.091" | 
+fatigue => "0.091" | 
+dyspnea on exertion => "0.091" | 
+dyspnea => "0.091" | 
+shortness of breath => "0.091" | 
+pansystolic murmur => "0.091" | 
+jugular venous distention => "0.091" | 
+systolic ejection murmur => "0.091" | 
+hypotension => "0.091" | 
+angina pectoris => "0.091" | 
+hypokinesia => "0.091" 
+)
+$S20 = (
+mass in breast => "0.0834" | 
+mass of body structure => "0.0834" | 
+paresthesia => "0.0834" | 
+retropulsion => "0.0834" | 
+erythema => "0.0834" | 
+difficulty => "0.0834" | 
+lesion => "0.0834" | 
+estrogen use => "0.0834" | 
+burning sensation => "0.0834" | 
+dyspnea => "0.0834" | 
+swelling => "0.0834" | 
+formication => "0.0834" 
+)
+$S21 = (
+drowsiness => "0.0589" | 
+lip smacking => "0.0589" | 
+myoclonus => "0.0589" | 
+tremor => "0.0589" | 
+phonophobia => "0.0589" | 
+rolling of eyes => "0.0589" | 
+sleepy => "0.0589" | 
+hirsutism => "0.0589" | 
+moody => "0.0589" | 
+muscle twitch => "0.0589" | 
+unresponsiveness => "0.0589" | 
+headache => "0.0589" | 
+ambidexterity => "0.0589" | 
+absences finding => "0.0589" | 
+spasm => "0.0589" | 
+decreased body weight => "0.0589" | 
+tumor cell invasion => "0.0589" 
+)
+$S22 = (
+speech slurred => "0.0589" | 
+dysarthria => "0.0589" | 
+facial paresis => "0.0589" | 
+asthenia => "0.0589" | 
+neck stiffness => "0.0589" | 
+vertigo => "0.0589" | 
+numbness => "0.0589" | 
+lightheadedness => "0.0589" | 
+extrapyramidal sign => "0.0589" | 
+Stahlis line => "0.0589" | 
+vision blurred => "0.0589" | 
+headache => "0.0589" | 
+room spinning => "0.0589" | 
+syncope => "0.0589" | 
+difficulty => "0.0589" | 
+rambling speech => "0.0589" | 
+clumsiness => "0.0589" 
+)
+$S23 = (
+hematuria => "0.0435" | 
+dysesthesia => "0.0435" | 
+asthenia => "0.0435" | 
+polymyalgia => "0.0435" | 
+passed stones => "0.0435" | 
+pleuritic pain => "0.0435" | 
+guaiac positive => "0.0435" | 
+rale => "0.0435" | 
+breath sounds decreased => "0.0435" | 
+urge incontinence => "0.0435" | 
+dysuria => "0.0435" | 
+diarrhea => "0.0435" | 
+vertigo => "0.0435" | 
+qt interval prolonged => "0.0435" | 
+ataxia => "0.0435" | 
+paresis => "0.0435" | 
+hemianopsia homonymous => "0.0435" | 
+tumor cell invasion => "0.0435" | 
+hemodynamically stable => "0.0435" | 
+mass of body structure => "0.0435" | 
+rhonchus => "0.0435" | 
+orthostasis => "0.0435" | 
+decreased body weight => "0.0435" 
+)
+$S24 = (
+shortness of breath => "0.0625" | 
+hypoxemia => "0.0625" | 
+tachypnea => "0.0625" | 
+hematocrit decreased => "0.0625" | 
+pain chest => "0.0625" | 
+dyspnea => "0.0625" | 
+pleuritic pain => "0.0625" | 
+neck stiffness => "0.0625" | 
+yellow sputum => "0.0625" | 
+productive cough => "0.0625" | 
+cicatrisation => "0.0625" | 
+unresponsiveness => "0.0625" | 
+distress respiratory => "0.0625" | 
+wheezing => "0.0625" | 
+apyrexial => "0.0625" | 
+non productive cough => "0.0625" 
+)
+$S25 = (
+shortness of breath => "0.1" | 
+pain => "0.1" | 
+vomiting => "0.1" | 
+nausea => "0.1" | 
+bradycardia => "0.1" | 
+pain abdominal => "0.1" | 
+fever => "0.1" | 
+cicatrisation => "0.1" | 
+mediastinal shift => "0.1" | 
+impaired cognition => "0.1" 
+)
+$S26 = (
+hemiplegia => "0.0667" | 
+snore => "0.0667" | 
+unresponsiveness => "0.0667" | 
+productive cough => "0.0667" | 
+dyspnea => "0.0667" | 
+tachypnea => "0.0667" | 
+hyperkalemia => "0.0667" | 
+hypokinesia => "0.0667" | 
+sinus rhythm => "0.0667" | 
+general unsteadiness => "0.0667" | 
+bruit => "0.0667" | 
+consciousness clear => "0.0667" | 
+shortness of breath => "0.0667" | 
+lesion => "0.0667" | 
+redness => "0.0667" 
+)
+$S27 = (
+pain => "0.091" | 
+food intolerance => "0.091" | 
+numbness of hand => "0.091" | 
+general discomfort => "0.091" | 
+drowsiness => "0.091" | 
+asthenia => "0.091" | 
+nonsmoker => "0.091" | 
+non productive cough => "0.091" | 
+polydypsia => "0.091" | 
+stiffness => "0.091" | 
+unsteady gait => "0.091" 
+)
+$S28 = (
+clonus => "0.125" | 
+egophony => "0.125" | 
+facial paresis => "0.125" | 
+aphagia => "0.125" | 
+muscle twitch => "0.125" | 
+paralyse => "0.125" | 
+low back pain => "0.125" | 
+charleyhorse => "0.125"  
+)
+$S29 = (
+thicken => "0.04" | 
+tumor cell invasion => "0.04" | 
+metastatic lesion => "0.04" | 
+pain neck => "0.04" | 
+lung nodule => "0.04" | 
+pain => "0.04" | 
+pain abdominal => "0.04" | 
+food intolerance => "0.04" | 
+mass of body structure => "0.04" | 
+atypia => "0.04" 
+)
+$S30 = (
+lesion => "0.04" | 
+prostatism => "0.04" | 
+constipation => "0.04" | 
+general discomfort => "0.04" | 
+diarrhea => "0.04" | 
+pain abdominal => "0.04" | 
+urinary hesitation => "0.04" | 
+dizzy spells => "0.04" | 
+shooting pain => "0.04" | 
+bradycardia => "0.04" | 
+vomiting => "0.04" | 
+systolic ejection murmur => "0.04" | 
+nausea => "0.04" | 
+hyperemesis => "0.04" | 
+polydypsia => "0.04"  
+)
+$S31 = (
+lesion => "0.0715" | 
+fever => "0.0715" | 
+welt => "0.0715" | 
+transaminitis => "0.0715" | 
+decreased body weight => "0.0715" | 
+ataxia => "0.0715" | 
+tinnitus => "0.0715" | 
+hydropneumothorax => "0.0715" | 
+superimposition => "0.0715" | 
+haemoptysis => "0.0715" | 
+fatigue => "0.0715" | 
+tired => "0.0715" | 
+polydypsia => "0.0715" | 
+difficulty passing urine => "0.0715"  
+)
+$S32 = (
+chill => "0.05" | 
+guaiac positive => "0.05" | 
+monoclonal => "0.05" | 
+ecchymosis => "0.05" | 
+tumor cell invasion => "0.05" | 
+haemorrhage => "0.05" | 
+pallor => "0.05" | 
+asthenia => "0.05" | 
+fatigue => "0.05" | 
+heme positive => "0.05" | 
+pain back => "0.05" | 
+orthostasis => "0.05" | 
+hyponatremia => "0.05" | 
+dizziness => "0.05" | 
+shortness of breath => "0.05" | 
+pain => "0.05" | 
+rhonchus => "0.05" | 
+arthralgia => "0.05" | 
+swelling => "0.05" | 
+transaminitis => "0.05" 
+)
+$S33 = (
+shortness of breath => "0.1" | 
+wheezing => "0.1" | 
+cough => "0.1" | 
+dyspnea => "0.1" | 
+distress respiratory => "0.1" | 
+sputum purulent => "0.1" | 
+hypoxemia => "0.1" | 
+hypercapnia => "0.1" | 
+patient non compliance => "0.1" | 
+chest tightness => "0.1" 
+)
+$S34 = (
+breakthrough pain => "0.091" | 
+pain back => "0.091" | 
+pain => "0.091" | 
+shortness of breath => "0.091" | 
+snuffle => "0.091" | 
+pain chest => "0.091" | 
+pain abdominal => "0.091" | 
+hepatosplenomegaly => "0.091" | 
+green sputum => "0.091" | 
+apyrexial => "0.091" | 
+headache => "0.091"  
+)
+$S35 = (
+pain chest => "0.1" | 
+angina pectoris => "0.1" | 
+shortness of breath => "0.1" | 
+hypokinesia => "0.1" | 
+sweat => "0.1" | 
+sweating increased => "0.1" | 
+pressure chest => "0.1" | 
+dyspnea on exertion => "0.1" | 
+orthopnea => "0.1" | 
+chest tightness => "0.1" 
+)
+$S36 = (
+moan => "0.0556" | 
+nausea => "0.0556" | 
+pain abdominal => "0.0556" | 
+Murphys sign => "0.0556" | 
+flatulence => "0.0556" | 
+colic abdominal => "0.0556" | 
+pain => "0.0556" | 
+ascites => "0.0556" | 
+diarrhea => "0.0556" | 
+qt interval prolonged => "0.0556" | 
+cardiovascular finding => "0.0556" | 
+cardiovascular event => "0.0556" | 
+groggy => "0.0556" | 
+sinus rhythm => "0.0556" | 
+gasping for breath => "0.0556" | 
+constipation => "0.0556" | 
+feces in rectum => "0.0556" | 
+abnormally hard consistency => "0.0556" 
+)
+$S37 = (
+suicidal => "0.04" | 
+hallucinations auditory => "0.04" | 
+feeling suicidal => "0.04" | 
+hallucinations visual => "0.04" | 
+motor retardation => "0.04" | 
+blackout => "0.04" | 
+verbal auditory hallucinations => "0.04" | 
+feeling hopeless => "0.04" | 
+irritable mood => "0.04" | 
+agitation => "0.04" | 
+tremor => "0.04" | 
+catatonia => "0.04" | 
+weepiness => "0.04" | 
+homelessness => "0.04" | 
+sleeplessness => "0.04" | 
+withdraw => "0.04" | 
+energy increased => "0.04" | 
+intoxication => "0.04" | 
+worry => "0.04" | 
+behavior hyperactive => "0.04" | 
+patient non compliance => "0.04" | 
+mood depressed => "0.04" | 
+terrify => "0.04" | 
+nightmare => "0.04" | 
+consciousness clear => "0.04"  
+)
+$S38 = (
+hypokinesia => "0.091" | 
+anorexia => "0.091" | 
+hypertonicity => "0.091" | 
+shortness of breath => "0.091" | 
+hypoalbuminemia => "0.091" | 
+pruritus => "0.091" | 
+sore to touch => "0.091" | 
+hemodynamically stable => "0.091" | 
+facial paresis => "0.091" | 
+vomiting => "0.091" | 
+stool color yellow => "0.091" 
+)
+$S39 = (
+vomiting => "0.0455" | 
+orthopnea => "0.0455" | 
+hyperkalemia => "0.0455" | 
+oliguria => "0.0455" | 
+jugular venous distention => "0.0455" | 
+nausea => "0.0455" | 
+shortness of breath => "0.0455" | 
+mental status changes => "0.0455" | 
+diarrhea => "0.0455" | 
+asthenia => "0.0455" | 
+chest tightness => "0.0455" | 
+malaise => "0.0455" | 
+chill => "0.0455" | 
+rale => "0.0455" | 
+fever => "0.0455" | 
+pleuritic pain => "0.0455" | 
+apyrexial => "0.0455" | 
+guaiac positive => "0.0455" | 
+swelling => "0.0455" | 
+catatonia => "0.0455" | 
+unresponsiveness => "0.0455" | 
+yellow sputum => "0.0455" 
+)
+$S40 = (
+feeling suicidal => "0.0477" | 
+suicidal => "0.0477" | 
+hallucinations auditory => "0.0477" | 
+feeling hopeless => "0.0477" | 
+weepiness => "0.0477" | 
+sleeplessness => "0.0477" | 
+motor retardation => "0.0477" | 
+irritable mood => "0.0477" | 
+blackout => "0.0477" | 
+mood depressed => "0.0477" | 
+hallucinations visual => "0.0477" | 
+worry => "0.0477" | 
+agitation => "0.0477" | 
+tremor => "0.0477" | 
+intoxication => "0.0477" | 
+verbal auditory hallucinations => "0.0477" | 
+energy increased => "0.0477" | 
+difficulty => "0.0477" | 
+nightmare => "0.0477" | 
+unable to concentrate => "0.0477" | 
+homelessness => "0.0477"  
+)
+$S41 = (
+pain chest => "0.0527" | 
+st segment elevation => "0.0527" | 
+sweat => "0.0527" | 
+sweating increased => "0.0527" | 
+shortness of breath => "0.0527" | 
+st segment depression => "0.0527" | 
+hypokinesia => "0.0527" | 
+angina pectoris => "0.0527" | 
+pressure chest => "0.0527" | 
+t wave inverted => "0.0527" | 
+orthopnea => "0.0527" | 
+rale => "0.0527" | 
+chest tightness => "0.0527" | 
+presence of q wave => "0.0527" | 
+palpitation => "0.0527" | 
+dyspnea => "0.0527" | 
+chest discomfort => "0.0527" | 
+bradycardia => "0.0527" | 
+syncope => "0.0527" 
+)
+$S42 = (
+pain => "0.077" | 
+catatonia => "0.077" | 
+snore => "0.077" | 
+pain chest => "0.077" | 
+r wave feature => "0.077" | 
+has religious belief => "0.077" | 
+shortness of breath => "0.077" | 
+fatigue => "0.077" | 
+tired => "0.077" | 
+overweight => "0.077" | 
+systolic murmur => "0.077" | 
+mood depressed => "0.077" | 
+ecchymosis => "0.077"  
+)
+$S43 = (
+fever => "0.0834" | 
+dysuria => "0.0834" | 
+hematuria => "0.0834" | 
+renal angle tenderness => "0.0834" | 
+lethargy => "0.0834" | 
+asthenia => "0.0834" | 
+hyponatremia => "0.0834" | 
+hemodynamically stable => "0.0834" | 
+distress respiratory => "0.0834" | 
+difficulty passing urine => "0.0834" | 
+mental status changes => "0.0834" | 
+consciousness clear => "0.0834" 
+)
+$S44 = (
+left atrial hypertrophy => "0.077" | 
+sweat => "0.077" | 
+sweating increased => "0.077" | 
+alcohol binge episode => "0.077" | 
+pressure chest => "0.077" | 
+scar tissue => "0.077" | 
+cardiovascular finding => "0.077" | 
+cardiovascular event => "0.077" | 
+orthostasis => "0.077" | 
+shortness of breath => "0.077" | 
+t wave inverted => "0.077" | 
+vomiting => "0.077" | 
+pain abdominal => "0.077" 
+)
+$S45 = (
+hot flush => "0.1" | 
+pain => "0.1" | 
+redness => "0.1" | 
+swelling => "0.1" | 
+erythema => "0.1" | 
+emphysematous change => "0.1" | 
+sore to touch => "0.1" | 
+hypokinesia => "0.1" | 
+ascites => "0.1" | 
+patient non compliance => "0.1" 
+)
+$S46 = (
+sore to touch => "0.0834" | 
+pruritus => "0.0834" | 
+feeling strange => "0.0834" | 
+pustule => "0.0834" | 
+cushingoid facies => "0.0834" | 
+cushingoid habitus => "0.0834" | 
+decreased body weight => "0.0834" | 
+mood depressed => "0.0834" | 
+estrogen use => "0.0834" | 
+wheezing => "0.0834" | 
+ascites => "0.0834" | 
+seizure => "0.0834" 
+)
+$S47 = (
+fecaluria => "0.0667" | 
+constipation => "0.0667" | 
+abscess bacterial => "0.0667" | 
+heme positive => "0.0667" | 
+lightheadedness => "0.0667" | 
+diarrhea => "0.0667" | 
+haemorrhage => "0.0667" | 
+pain => "0.0667" | 
+projectile vomiting => "0.0667" | 
+pneumatouria => "0.0667" | 
+cystic lesion => "0.0667" | 
+anorexia => "0.0667" | 
+nausea => "0.0667" | 
+feeling suicidal => "0.0667" | 
+feeling hopeless => "0.0667"  
+)
+$S48 = (
+orthopnea => "0.0715" | 
+oliguria => "0.0715" | 
+slowing of urinary stream => "0.0715" | 
+extreme exhaustion => "0.0715" | 
+unresponsiveness => "0.0715" | 
+hypotension => "0.0715" | 
+enuresis => "0.0715" | 
+shortness of breath => "0.0715" | 
+haemorrhage => "0.0715" | 
+prostatism => "0.0715" | 
+no status change => "0.0715" | 
+bedridden => "0.0715" | 
+bedridden => "0.0715" | 
+fatigue => "0.0715" 
+)
+$S49 = (
+hallucinations auditory => "0.0834" | 
+hypersomnolence => "0.0834" | 
+irritable mood => "0.0834" | 
+verbal auditory hallucinations => "0.0834" | 
+patient non compliance => "0.0834" | 
+agitation => "0.0834" | 
+suicidal => "0.0834" | 
+worry => "0.0834" | 
+hallucinations visual => "0.0834" | 
+underweight => "0.0834" | 
+underweight => "0.0834" | 
+homelessness => "0.0834" 
+)
+$S50 = (
+systolic murmur => "0.3334" | 
+frail => "0.3334" | 
+fever => "0.3334" 
+)
+$S51 = (
+uncoordination => "0.0715" | 
+asterixis => "0.0715" | 
+haemorrhage => "0.0715" | 
+drowsiness => "0.0715" | 
+sleepy => "0.0715" | 
+absences finding => "0.0715" | 
+posturing => "0.0715" | 
+aura => "0.0715" | 
+tonic seizures => "0.0715" | 
+debilitation => "0.0715" | 
+consciousness clear => "0.0715" | 
+unresponsiveness => "0.0715" | 
+thicken => "0.0715" | 
+hypokinesia => "0.0715" 
+)
+$S52 = (
+extreme exhaustion => "0.1112" | 
+sleeplessness => "0.1112" | 
+enuresis => "0.1112" | 
+patient non compliance => "0.1112" | 
+feeling hopeless => "0.1112" | 
+hallucinations visual => "0.1112" | 
+bedridden => "0.1112" | 
+bedridden => "0.1112" | 
+prostatism => "0.1112"  
+)
+$S53 = (
+hematuria => "0.0435" | 
+dysesthesia => "0.0435" | 
+asthenia => "0.0435" | 
+polymyalgia => "0.0435" | 
+passed stones => "0.0435" | 
+pleuritic pain => "0.0435" | 
+guaiac positive => "0.0435" | 
+rale => "0.0435" | 
+breath sounds decreased => "0.0435" | 
+urge incontinence => "0.0435" | 
+dysuria => "0.0435" | 
+diarrhea => "0.0435" | 
+vertigo => "0.0435" | 
+qt interval prolonged => "0.0435" | 
+ataxia => "0.0435" | 
+paresis => "0.0435" | 
+hemianopsia homonymous => "0.0435" | 
+tumor cell invasion => "0.0435" | 
+hemodynamically stable => "0.0435" | 
+mass of body structure => "0.0435" | 
+rhonchus => "0.0435" | 
+orthostasis => "0.0435" | 
+decreased body weight => "0.0435" 
+)
+$S54 = (
+drool => "0.0556" | 
+agitation => "0.0556" | 
+nightmare => "0.0556" | 
+rhonchus => "0.0556" | 
+consciousness clear => "0.0556" | 
+pin point pupils => "0.0556" | 
+bedridden => "0.0556" | 
+bedridden => "0.0556" | 
+frail => "0.0556" | 
+tremor resting => "0.0556" | 
+hyperkalemia => "0.0556" | 
+facial paresis => "0.0556" | 
+groggy => "0.0556" | 
+muscle twitch => "0.0556" | 
+wheelchair bound => "0.0556" | 
+tremor => "0.0556" | 
+cough => "0.0556" | 
+fever => "0.0556"  
+)
+$S55 = (
+paraparesis => "0.0667" | 
+seizure => "0.0667" | 
+asthenia => "0.0667" | 
+urge incontinence => "0.0667" | 
+unconscious state => "0.0667" | 
+aura => "0.0667" | 
+moody => "0.0667" | 
+fear of falling => "0.0667" | 
+tremor => "0.0667" | 
+spasm => "0.0667" | 
+unhappy => "0.0667" | 
+syncope => "0.0667" | 
+fall => "0.0667" | 
+stiffness => "0.0667" | 
+unresponsiveness => "0.0667" 
+)
+$S56 = (
+cyanosis => "0.1112" | 
+tachypnea => "0.1112" | 
+para 1 => "0.1112" | 
+bradycardia => "0.1112" | 
+breech presentation => "0.1112" | 
+cushingoid facies => "0.1112" | 
+cushingoid habitus => "0.1112" | 
+cough => "0.1112" | 
+myalgia => "0.1112" 
+)
+$S57 = (
+orthopnea => "0.0834" | 
+shortness of breath => "0.0834" | 
+dyspnea on exertion => "0.0834" | 
+jugular venous distention => "0.0834" | 
+rale => "0.0834" | 
+pain chest => "0.0834" | 
+palpitation => "0.0834" | 
+sweat => "0.0834" | 
+sweating increased => "0.0834" | 
+weight gain => "0.0834" | 
+cough => "0.0834" | 
+dyspnea => "0.0834" 
+)
+$S58 = (
+feeling suicidal => "0.0358" | 
+energy increased => "0.0358" | 
+suicidal => "0.0358" | 
+irritable mood => "0.0358" | 
+agitation => "0.0358" | 
+has religious belief => "0.0358" | 
+disturbed family => "0.0358" | 
+hallucinations auditory => "0.0358" | 
+verbal auditory hallucinations => "0.0358" | 
+weepiness => "0.0358" | 
+behavior hyperactive => "0.0358" | 
+catatonia => "0.0358" | 
+feeling hopeless => "0.0358" | 
+worry => "0.0358" | 
+sleeplessness => "0.0358" | 
+hypersomnia => "0.0358" | 
+difficulty => "0.0358" | 
+hallucinations visual => "0.0358" | 
+hyperhidrosis disorder => "0.0358" | 
+mydriasis => "0.0358" | 
+extrapyramidal sign => "0.0358" | 
+loose associations => "0.0358" | 
+intoxication => "0.0358" | 
+motor retardation => "0.0358" | 
+homelessness => "0.0358" | 
+blackout => "0.0358" | 
+tremor => "0.0358" | 
+exhaustion => "0.0358" 
+)
+$S59 = (
+ascites => "0.0834" | 
+spontaneous rupture of membranes => "0.0834" | 
+tachypnea => "0.0834" | 
+pain abdominal => "0.0834" | 
+pruritus => "0.0834" | 
+anorexia => "0.0834" | 
+transaminitis => "0.0834" | 
+projectile vomiting => "0.0834" | 
+chill => "0.0834" | 
+distress respiratory => "0.0834" | 
+fever => "0.0834" | 
+vomiting => "0.0834"  
+)
+$S60 = (
+pericardial friction rub => "0.0834" | 
+dyspnea => "0.0834" | 
+shortness of breath => "0.0834" | 
+hemodynamically stable => "0.0834" | 
+cardiomegaly => "0.0834" | 
+hypotension => "0.0834" | 
+sputum purulent => "0.0834" | 
+facial paresis => "0.0834" | 
+pain => "0.0834" | 
+oliguria => "0.0834" | 
+blackout => "0.0834" | 
+intoxication => "0.0834" 
+)
+$S61 = (
+flatulence => "0.077" | 
+pain => "0.077" | 
+large for dates fetus => "0.077" | 
+para 1 => "0.077" | 
+vomiting => "0.077" | 
+lung nodule => "0.077" | 
+breech presentation => "0.077" | 
+shortness of breath => "0.077" | 
+decreased body weight => "0.077" | 
+immobile => "0.077" | 
+unsteady gait => "0.077" | 
+hallucinations visual => "0.077" | 
+feeling suicidal => "0.077" 
+)
+$S62 = (
+vomiting => "0.0834" | 
+nausea => "0.0834" | 
+pain abdominal => "0.0834" | 
+pain => "0.0834" | 
+cushingoid facies => "0.0834" | 
+cushingoid habitus => "0.0834" | 
+ascites => "0.0834" | 
+thicken => "0.0834" | 
+sore to touch => "0.0834" | 
+diarrhea => "0.0834" | 
+apyrexial => "0.0834" | 
+palpitation => "0.0834"  
+)
+$S63 = (
+pleuritic pain => "0.0625" | 
+thicken => "0.0625" | 
+myalgia => "0.0625" | 
+apyrexial => "0.0625" | 
+night sweat => "0.0625" | 
+flare => "0.0625" | 
+shortness of breath => "0.0625" | 
+orthopnea => "0.0625" | 
+abscess bacterial => "0.0625" | 
+hypotension => "0.0625" | 
+cough => "0.0625" | 
+metastatic lesion => "0.0625" | 
+breath sounds decreased => "0.0625" | 
+decreased body weight => "0.0625" | 
+pulsus paradoxus => "0.0625" | 
+hypokinesia => "0.0625" 
+)
+$S64 = (
+fever => "0.0667" | 
+night sweat => "0.0667" | 
+spontaneous rupture of membranes => "0.0667" | 
+cough => "0.0667" | 
+decreased body weight => "0.0667" | 
+chill => "0.0667" | 
+diarrhea => "0.0667" | 
+pleuritic pain => "0.0667" | 
+patient non compliance => "0.0667" | 
+tachypnea => "0.0667" | 
+productive cough => "0.0667" | 
+muscle hypotonia => "0.0667" | 
+hypotonic => "0.0667" | 
+feeling suicidal => "0.0667"  
+)
+$S65 = (
+dyspnea => "0.1112" | 
+cardiovascular finding => "0.1112" | 
+cardiovascular event => "0.1112" | 
+haemoptysis => "0.1112" | 
+cough => "0.1112" | 
+hypercapnia => "0.1112" | 
+soft tissue swelling => "0.1112" | 
+prostatism => "0.1112" | 
+agitation => "0.1112"  
+)
+$S66 = (
+dysarthria => "0.125" | 
+asthenia => "0.125" | 
+speech slurred => "0.125" | 
+facial paresis => "0.125" | 
+hemiplegia => "0.125" | 
+unresponsiveness => "0.125" | 
+seizure => "0.125" | 
+numbness => "0.125"  
+)
+$S67 = (
+seizure => "0.05" | 
+enuresis => "0.05" | 
+lethargy => "0.05" | 
+speech slurred => "0.05" | 
+fall => "0.05" | 
+consciousness clear => "0.05" | 
+mental status changes => "0.05" | 
+asterixis => "0.05" | 
+unconscious state => "0.05" | 
+agitation => "0.05" | 
+muscle twitch => "0.05" | 
+asthenia => "0.05" | 
+sleepy => "0.05" | 
+dizziness => "0.05" | 
+headache => "0.05" | 
+dysarthria => "0.05" | 
+lightheadedness => "0.05" | 
+tremor => "0.05" | 
+hyponatremia => "0.05" | 
+unresponsiveness => "0.05"  
+)
+$S68 = (
+diarrhea => "0.0625" | 
+throat sore => "0.0625" | 
+decreased body weight => "0.0625" | 
+chill => "0.0625" | 
+headache => "0.0625" | 
+abdominal tenderness => "0.0625" | 
+patient non compliance => "0.0625" | 
+photophobia => "0.0625" | 
+night sweat => "0.0625" | 
+painful swallowing => "0.0625" | 
+poor dentition => "0.0625" | 
+transaminitis => "0.0625" | 
+non productive cough => "0.0625" | 
+adverse reaction => "0.0625" | 
+adverse effect => "0.0625" | 
+abdominal bloating => "0.0625" 
+)
+$S69 = (
+worry => "0.0417" | 
+feeling suicidal => "0.0417" | 
+suicidal => "0.0417" | 
+sleeplessness => "0.0417" | 
+feeling hopeless => "0.0417" | 
+irritable mood => "0.0417" | 
+tremor => "0.0417" | 
+blackout => "0.0417" | 
+weepiness => "0.0417" | 
+has religious belief => "0.0417" | 
+nervousness => "0.0417" | 
+hallucinations visual => "0.0417" | 
+formication => "0.0417" | 
+difficulty => "0.0417" | 
+pain chest => "0.0417" | 
+patient non compliance => "0.0417" | 
+agitation => "0.0417" | 
+palpitation => "0.0417" | 
+hallucinations auditory => "0.0417" | 
+mood depressed => "0.0417" | 
+hot flush => "0.0417" | 
+pain => "0.0417" | 
+consciousness clear => "0.0417" | 
+nightmare => "0.0417" 
+)
+$S70 = (
+ascites => "0.0834" | 
+fall => "0.0834" | 
+splenomegaly => "0.0834" | 
+pruritus => "0.0834" | 
+pain abdominal => "0.0834" | 
+tumor cell invasion => "0.0834" | 
+distended abdomen => "0.0834" | 
+lesion => "0.0834" | 
+hemodynamically stable => "0.0834" | 
+guaiac positive => "0.0834" | 
+sore to touch => "0.0834" | 
+bleeding of vagina => "0.0834"  
+)
+$S71 = (
+hypoproteinemia => "0.125" | 
+fatigue => "0.125" | 
+haemorrhage => "0.125" | 
+fatigability => "0.125" | 
+cushingoid facies => "0.125" | 
+cushingoid habitus => "0.125" | 
+stool color yellow => "0.125" | 
+colic abdominal => "0.125"  
+)
+$S72 = (
+diarrhea => "0.0625" | 
+throat sore => "0.0625" | 
+decreased body weight => "0.0625" | 
+chill => "0.0625" | 
+headache => "0.0625" | 
+abdominal tenderness => "0.0625" | 
+patient non compliance => "0.0625" | 
+photophobia => "0.0625" | 
+night sweat => "0.0625" | 
+painful swallowing => "0.0625" | 
+poor dentition => "0.0625" | 
+transaminitis => "0.0625" | 
+non productive cough => "0.0625" | 
+adverse reaction => "0.0625" | 
+adverse effect => "0.0625" | 
+abdominal bloating => "0.0625"  
+)
+$S73 = (
+pain abdominal => "0.05" | 
+abscess bacterial => "0.05" | 
+dullness => "0.05" | 
+red blotches => "0.05" | 
+diarrhea => "0.05" | 
+sore to touch => "0.05" | 
+dysuria => "0.05" | 
+pain => "0.05" | 
+vomiting => "0.05" | 
+sinus rhythm => "0.05" | 
+colic abdominal => "0.05" | 
+apyrexial => "0.05" | 
+abdominal tenderness => "0.05" | 
+fever => "0.05" | 
+unsteady gait => "0.05" | 
+thicken => "0.05" | 
+urgency of micturition => "0.05" | 
+anorexia => "0.05" | 
+monoclonal => "0.05" | 
+constipation => "0.05"  
+)
+$S74 = (
+shortness of breath => "0.0589" | 
+scar tissue => "0.0589" | 
+apyrexial => "0.0589" | 
+no known drug allergies => "0.0589" | 
+pain => "0.0589" | 
+productive cough => "0.0589" | 
+throat sore => "0.0589" | 
+dyspnea => "0.0589" | 
+chest tightness => "0.0589" | 
+hypoxemia => "0.0589" | 
+tachypnea => "0.0589" | 
+sensory discomfort => "0.0589" | 
+fever => "0.0589" | 
+vomiting => "0.0589" | 
+rhonchus => "0.0589" | 
+hemiplegia => "0.0589" | 
+fremitus => "0.0589" 
+)
+$S75 = (
+pain abdominal => "0.0834" | 
+paraparesis => "0.0834" | 
+nausea => "0.0834" | 
+vomiting => "0.0834" | 
+polymyalgia => "0.0834" | 
+out of breath => "0.0834" | 
+pain chest => "0.0834" | 
+hemiplegia => "0.0834" | 
+gurgle => "0.0834" | 
+hunger => "0.0834" | 
+apyrexial => "0.0834" | 
+nervousness => "0.0834"  
+)
+$S76 = (
+feeling suicidal => "0.0477" | 
+suicidal => "0.0477" | 
+hallucinations auditory => "0.0477" | 
+feeling hopeless => "0.0477" | 
+weepiness => "0.0477" | 
+sleeplessness => "0.0477" | 
+motor retardation => "0.0477" | 
+irritable mood => "0.0477" | 
+blackout => "0.0477" | 
+mood depressed => "0.0477" | 
+hallucinations visual => "0.0477" | 
+worry => "0.0477" | 
+agitation => "0.0477" | 
+tremor => "0.0477" | 
+intoxication => "0.0477" | 
+verbal auditory hallucinations => "0.0477" | 
+energy increased => "0.0477" | 
+difficulty => "0.0477" | 
+nightmare => "0.0477" | 
+unable to concentrate => "0.0477" | 
+homelessness => "0.0477"  
+)
+$S77 = (
+behavior showing increased motor activity => "0.0477" | 
+scar tissue => "0.0477" | 
+dyspnea on exertion => "0.0477" | 
+coordination abnormal => "0.0477" | 
+myalgia => "0.0477" | 
+hypercapnia => "0.0477" | 
+clammy skin => "0.0477" | 
+has religious belief => "0.0477" | 
+room spinning => "0.0477" | 
+moan => "0.0477" | 
+night sweat => "0.0477" | 
+cachexia => "0.0477" | 
+symptom aggravating factors => "0.0477" | 
+dyspnea => "0.0477" | 
+rale => "0.0477" | 
+flushing => "0.0477" | 
+painful swallowing => "0.0477" | 
+arthralgia => "0.0477" | 
+choke => "0.0477" | 
+tenesmus => "0.0477" | 
+constipation => "0.0477" 
+)
+$S78 = (
+unresponsiveness => "0.091" | 
+hypothermia => "0.091" | 
+incoherent => "0.091" | 
+qt interval prolonged => "0.091" | 
+lameness => "0.091" | 
+claudication => "0.091" | 
+unconscious state => "0.091" | 
+clammy skin => "0.091" | 
+polyuria => "0.091" | 
+distress respiratory => "0.091" | 
+hypotension => "0.091" 
+)
+$S79 = (
+intoxication => "0.077" | 
+tremor => "0.077" | 
+agitation => "0.077" | 
+suicidal => "0.077" | 
+homelessness => "0.077" | 
+prostatism => "0.077" | 
+lethargy => "0.077" | 
+seizure => "0.077" | 
+muscle twitch => "0.077" | 
+stuffy nose => "0.077" | 
+feeling hopeless => "0.077" | 
+heavy legs => "0.077" | 
+rale => "0.077" 
+)
+$S80 = (
+pain => "0.0834" | 
+redness => "0.0834" | 
+prostate tender => "0.0834" | 
+fever => "0.0834" | 
+difficulty passing urine => "0.0834" | 
+sore to touch => "0.0834" | 
+swelling => "0.0834" | 
+apyrexial => "0.0834" | 
+erythema => "0.0834" | 
+abscess bacterial => "0.0834" | 
+pain foot => "0.0834" | 
+urinary hesitation => "0.0834"  
+)
+$S81 = (
+haemorrhage => "0.0625" | 
+bowel sounds decreased => "0.0625" | 
+decreased stool caliber => "0.0625" | 
+nausea and vomiting => "0.0625" | 
+hunger => "0.0625" | 
+diarrhea => "0.0625" | 
+dizziness => "0.0625" | 
+hyponatremia => "0.0625" | 
+clonus => "0.0625" | 
+pain => "0.0625" | 
+achalasia => "0.0625" | 
+burning sensation => "0.0625" | 
+guaiac positive => "0.0625" | 
+numbness of hand => "0.0625" | 
+wheezing => "0.0625" | 
+cough => "0.0625" 
+)
+$S82 = (
+mass of body structure => "0.0556" | 
+splenomegaly => "0.0556" | 
+lesion => "0.0556" | 
+paresis => "0.0556" | 
+tumor cell invasion => "0.0556" | 
+room spinning => "0.0556" | 
+haemorrhage => "0.0556" | 
+thicken => "0.0556" | 
+indifferent mood => "0.0556" | 
+cachexia => "0.0556" | 
+hypothermia => "0.0556" | 
+pain abdominal => "0.0556" | 
+hepatomegaly => "0.0556" | 
+hematocrit decreased => "0.0556" | 
+stupor => "0.0556" | 
+decreased body weight => "0.0556" | 
+shortness of breath => "0.0556" | 
+cough => "0.0556" 
+)
+$S83 = (
+fever => "0.0834" | 
+pain => "0.0834" | 
+urgency of micturition => "0.0834" | 
+hematuria => "0.0834" | 
+vomiting => "0.0834" | 
+chill => "0.0834" | 
+diarrhea => "0.0834" | 
+nausea => "0.0834" | 
+pain abdominal => "0.0834" | 
+myalgia => "0.0834" | 
+fever => "0.0834" | 
+chill => "0.0834"  
+)
+$S84 = (
+vomiting => "0.1112" | 
+pain abdominal => "0.1112" | 
+nausea => "0.1112" | 
+pain => "0.1112" | 
+diarrhea => "0.1112" | 
+stool color yellow => "0.1112" | 
+rigor temperature associated observation => "0.1112" | 
+apyrexial => "0.1112" | 
+sore to touch => "0.1112"  
+)
+$S85 = (
+vomiting => "0.0834" | 
+nausea => "0.0834" | 
+pain abdominal => "0.0834" | 
+pain => "0.0834" | 
+cushingoid facies => "0.0834" | 
+cushingoid habitus => "0.0834" | 
+ascites => "0.0834" | 
+thicken => "0.0834" | 
+sore to touch => "0.0834" | 
+diarrhea => "0.0834" | 
+apyrexial => "0.0834" | 
+palpitation => "0.0834" 
+)
+$S86 = (
+shortness of breath => "0.0667" | 
+orthopnea => "0.0667" | 
+hypokinesia => "0.0667" | 
+jugular venous distention => "0.0667" | 
+palpitation => "0.0667" | 
+pain chest => "0.0667" | 
+syncope => "0.0667" | 
+yellow sputum => "0.0667" | 
+rale => "0.0667" | 
+dyspnea => "0.0667" | 
+dyspnea on exertion => "0.0667" | 
+left atrial hypertrophy => "0.0667" | 
+fatigue => "0.0667" | 
+weight gain => "0.0667" | 
+patient non compliance => "0.0667"  
+)
+$S87 = (
+yellow sputum => "0.0556" | 
+cachexia => "0.0556" | 
+chill => "0.0556" | 
+decreased body weight => "0.0556" | 
+productive cough => "0.0556" | 
+myalgia => "0.0556" | 
+diarrhea => "0.0556" | 
+neck stiffness => "0.0556" | 
+hacking cough => "0.0556" | 
+dyspareunia => "0.0556" | 
+hypokalemia => "0.0556" | 
+dyspnea on exertion => "0.0556" | 
+poor dentition => "0.0556" | 
+transaminitis => "0.0556" | 
+non productive cough => "0.0556" | 
+headache => "0.0556" | 
+floppy => "0.0556" | 
+spontaneous rupture of membranes => "0.0556"  
+)
+$S88 = (
+lesion => "0.0667" | 
+prostatism => "0.0667" | 
+constipation => "0.0667" | 
+general discomfort => "0.0667" | 
+diarrhea => "0.0667" | 
+pain abdominal => "0.0667" | 
+urinary hesitation => "0.0667" | 
+dizzy spells => "0.0667" | 
+shooting pain => "0.0667" | 
+bradycardia => "0.0667" | 
+vomiting => "0.0667" | 
+systolic ejection murmur => "0.0667" | 
+nausea => "0.0667" | 
+hyperemesis => "0.0667" | 
+polydypsia => "0.0667"  
+)
+$S89 = (
+urgency of micturition => "0.0589" | 
+shortness of breath => "0.0589" | 
+rale => "0.0589" | 
+tachypnea => "0.0589" | 
+orthopnea => "0.0589" | 
+Heberdens node => "0.0589" | 
+jugular venous distention => "0.0589" | 
+dyspnea => "0.0589" | 
+sweat => "0.0589" | 
+sweating increased => "0.0589" | 
+patient non compliance => "0.0589" | 
+chest discomfort => "0.0589" | 
+hyperkalemia => "0.0589" | 
+sinus rhythm => "0.0589" | 
+pain chest => "0.0589" | 
+hypotension => "0.0589" | 
+wheezing => "0.0589" 
+)
+$S90 = (
+mass in breast => "0.0834" | 
+mass of body structure => "0.0834" | 
+paresthesia => "0.0834" | 
+retropulsion => "0.0834" | 
+erythema => "0.0834" | 
+difficulty => "0.0834" | 
+lesion => "0.0834" | 
+estrogen use => "0.0834" | 
+burning sensation => "0.0834" | 
+dyspnea => "0.0834" | 
+swelling => "0.0834" | 
+formication => "0.0834"  
+)
+$S91 = (
+dysarthria => "0.0527" | 
+paresis => "0.0527" | 
+asthenia => "0.0527" | 
+aphagia => "0.0527" | 
+seizure => "0.0527" | 
+speech slurred => "0.0527" | 
+focal seizures => "0.0527" | 
+hemiplegia => "0.0527" | 
+abnormal sensation => "0.0527" | 
+unresponsiveness => "0.0527" | 
+stupor => "0.0527" | 
+drowsiness => "0.0527" | 
+sleepy => "0.0527" | 
+fremitus => "0.0527" | 
+Stahlis line => "0.0527" | 
+stinging sensation => "0.0527" | 
+paralyse => "0.0527" | 
+clonus => "0.0527" | 
+facial paresis => "0.0527"  
+)
+$S92 = (
+shortness of breath => "0.0715" | 
+dyspnea on exertion => "0.0715" | 
+asymptomatic => "0.0715" | 
+hypokinesia => "0.0715" | 
+dyspnea => "0.0715" | 
+syncope => "0.0715" | 
+thicken => "0.0715" | 
+left atrial hypertrophy => "0.0715" | 
+palpitation => "0.0715" | 
+fatigue => "0.0715" | 
+vomiting => "0.0715" | 
+pain => "0.0715" | 
+cardiomegaly => "0.0715" | 
+chest discomfort => "0.0715"  
+)
+$S93 = (
+shortness of breath => "0.091" | 
+rest pain => "0.091" | 
+angina pectoris => "0.091" | 
+unresponsiveness => "0.091" | 
+hyperkalemia => "0.091" | 
+sinus rhythm => "0.091" | 
+labored breathing => "0.091" | 
+dyspnea => "0.091" | 
+sore to touch => "0.091" | 
+anorexia => "0.091" | 
+sleepy => "0.091" 
+)
+$S94 = (
+drowsiness => "0.0589" | 
+lip smacking => "0.0589" | 
+myoclonus => "0.0589" | 
+tremor => "0.0589" | 
+phonophobia => "0.0589" | 
+rolling of eyes => "0.0589" | 
+sleepy => "0.0589" | 
+hirsutism => "0.0589" | 
+moody => "0.0589" | 
+muscle twitch => "0.0589" | 
+unresponsiveness => "0.0589" | 
+headache => "0.0589" | 
+ambidexterity => "0.0589" | 
+absences finding => "0.0589" | 
+spasm => "0.0589" | 
+decreased body weight => "0.0589" | 
+tumor cell invasion => "0.0589" 
+)
+$S95 = (
+pericardial friction rub => "0.0834" | 
+dyspnea => "0.0834" | 
+shortness of breath => "0.0834" | 
+hemodynamically stable => "0.0834" | 
+cardiomegaly => "0.0834" | 
+hypotension => "0.0834" | 
+sputum purulent => "0.0834" | 
+facial paresis => "0.0834" | 
+pain => "0.0834" | 
+oliguria => "0.0834" | 
+blackout => "0.0834" | 
+intoxication => "0.0834"  
+)
+$S96 = (
+ecchymosis => "0.1112" | 
+monocytosis => "0.1112" | 
+posterior rhinorrhea => "0.1112" | 
+haemorrhage => "0.1112" | 
+tachypnea => "0.1112" | 
+fever => "0.1112" | 
+pruritus => "0.1112" | 
+hypotension => "0.1112" | 
+fatigue => "0.1112" 
+)
+$S97 = (
+mass of body structure => "0.077" | 
+lesion => "0.077" | 
+decreased body weight => "0.077" | 
+constipation => "0.077" | 
+fremitus => "0.077" | 
+decreased stool caliber => "0.077" | 
+satiety early => "0.077" | 
+hematochezia => "0.077" | 
+egophony => "0.077" | 
+pain => "0.077" | 
+cicatrisation => "0.077" | 
+scar tissue => "0.077" | 
+pain abdominal => "0.077"  
+)
+$S98 = (
+shortness of breath => "0.1429" | 
+orthopnea => "0.1429" | 
+jugular venous distention => "0.1429" | 
+rale => "0.1429" | 
+dyspnea => "0.1429" | 
+cough => "0.1429" | 
+wheezing => "0.1429" 
+)
+$S99 = (
+fever => "0.0667" | 
+pruritus => "0.0667" | 
+macule => "0.0667" | 
+lesion => "0.0667" | 
+redness => "0.0667" | 
+headache => "0.0667" | 
+apyrexial => "0.0667" | 
+arthralgia => "0.0667" | 
+swelling => "0.0667" | 
+erythema => "0.0667" | 
+photophobia => "0.0667" | 
+chill => "0.0667" | 
+scratch marks => "0.0667" | 
+pain => "0.0667" | 
+painful swallowing => "0.0667"  
+)
+$S100 = (
+drowsiness => "0.0667" | 
+sleepy => "0.0667" | 
+pain chest => "0.0667" | 
+angina pectoris => "0.0667" | 
+pressure chest => "0.0667" | 
+chest discomfort => "0.0667" | 
+shortness of breath => "0.0667" | 
+dyspnea => "0.0667" | 
+sinus rhythm => "0.0667" | 
+bradycardia => "0.0667" | 
+sweat => "0.0667" | 
+sweating increased => "0.0667" | 
+rale => "0.0667" | 
+asymptomatic => "0.0667" | 
+anorexia => "0.0667"  
+)
+$S101 = (
+shortness of breath => "0.1112" | 
+Stahlis line => "0.1112" | 
+heavy legs => "0.1112" | 
+breath sounds decreased => "0.1112" | 
+neck stiffness => "0.1112" | 
+dyspnea on exertion => "0.1112" | 
+cyanosis => "0.1112" | 
+hypotension => "0.1112" | 
+left atrial hypertrophy => "0.1112"  
+)
+$S102 = (
+fever => "0.0834" | 
+erythema => "0.0834" | 
+decreased translucency => "0.0834" | 
+hepatosplenomegaly => "0.0834" | 
+chill => "0.0834" | 
+pruritus => "0.0834" | 
+diarrhea => "0.0834" | 
+abscess bacterial => "0.0834" | 
+swelling => "0.0834" | 
+pain => "0.0834" | 
+apyrexial => "0.0834" | 
+cough => "0.0834" 
+)
+$S103 = (
+erythema => "0.0715" | 
+pain => "0.0715" | 
+swelling => "0.0715" | 
+redness => "0.0715" | 
+fever => "0.0715" | 
+abscess bacterial => "0.0715" | 
+patient non compliance => "0.0715" | 
+hypesthesia => "0.0715" | 
+hyperacusis => "0.0715" | 
+pruritus => "0.0715" | 
+pain chest => "0.0715" | 
+scratch marks => "0.0715" | 
+chill => "0.0715" | 
+sore to touch => "0.0715" 
+)
+$S104 = (
+pain => "0.0625" | 
+mass of body structure => "0.0625" | 
+night sweat => "0.0625" | 
+splenomegaly => "0.0625" | 
+lesion => "0.0625" | 
+chill => "0.0625" | 
+decreased body weight => "0.0625" | 
+swelling => "0.0625" | 
+fever => "0.0625" | 
+hyperacusis => "0.0625" | 
+fremitus => "0.0625" | 
+non productive cough => "0.0625" | 
+egophony => "0.0625" | 
+redness => "0.0625" | 
+hepatomegaly => "0.0625" | 
+fatigue => "0.0625" 
+)
+$S105 = (
+pain abdominal => "0.0834" | 
+breath holding spell => "0.0834" | 
+nausea => "0.0834" | 
+decreased body weight => "0.0834" | 
+sore to touch => "0.0834" | 
+scleral icterus => "0.0834" | 
+fever => "0.0834" | 
+myalgia => "0.0834" | 
+hyponatremia => "0.0834" | 
+retch => "0.0834" | 
+mass of body structure => "0.0834" | 
+decreased body weight => "0.0834"  
+)
+$S106 = (
+achalasia => "0.0556" | 
+fall => "0.0556" | 
+stiffness => "0.0556" | 
+withdraw => "0.0556" | 
+agitation => "0.0556" | 
+hemiplegia => "0.0556" | 
+difficulty => "0.0556" | 
+unresponsiveness => "0.0556" | 
+syncope => "0.0556" | 
+facial paresis => "0.0556" | 
+orthostasis => "0.0556" | 
+worry => "0.0556" | 
+drowsiness => "0.0556" | 
+sleepy => "0.0556" | 
+hematuria => "0.0556" | 
+tremor => "0.0556" | 
+night sweat => "0.0556" | 
+mass of body structure => "0.0556"  
+)
+$S107 = (
+pain abdominal => "0.0625" | 
+pain => "0.0625" | 
+hyperventilation => "0.0625" | 
+excruciating pain => "0.0625" | 
+gag => "0.0625" | 
+nausea => "0.0625" | 
+posturing => "0.0625" | 
+hemiplegia => "0.0625" | 
+sore to touch => "0.0625" | 
+haemorrhage => "0.0625" | 
+apyrexial => "0.0625" | 
+food intolerance => "0.0625" | 
+pulse absent => "0.0625" | 
+asthenia => "0.0625" | 
+mass of body structure => "0.0625" | 
+thicken => "0.0625" 
+)
+$S108 = (
+shortness of breath => "0.1667" | 
+hyperkalemia => "0.1667" | 
+pain chest => "0.1667" | 
+fever => "0.1667" | 
+gravida 0 => "0.1667" | 
+bleeding of vagina => "0.1667" 
+)
+$S109 = (
+fever => "0.077" | 
+thicken => "0.077" | 
+green sputum => "0.077" | 
+vomiting => "0.077" | 
+nausea and vomiting => "0.077" | 
+awakening early => "0.077" | 
+pain => "0.077" | 
+nausea => "0.077" | 
+chill => "0.077" | 
+tenesmus => "0.077" | 
+urge incontinence => "0.077" | 
+pain abdominal => "0.077" | 
+hemodynamically stable => "0.077"  
+)
+$S110 = (
+swelling => "0.0834" | 
+pain => "0.0834" | 
+ecchymosis => "0.0834" | 
+shortness of breath => "0.0834" | 
+pain in lower limb => "0.0834" | 
+cardiomegaly => "0.0834" | 
+rale => "0.0834" | 
+erythema => "0.0834" | 
+hypotension => "0.0834" | 
+clonus => "0.0834" | 
+non productive cough => "0.0834" | 
+redness => "0.0834" 
+)
+$S111 = (
+nightmare => "0.0527" | 
+feeling hopeless => "0.0527" | 
+transsexual => "0.0527" | 
+hallucinations auditory => "0.0527" | 
+irritable mood => "0.0527" | 
+sleeplessness => "0.0527" | 
+agitation => "0.0527" | 
+weepiness => "0.0527" | 
+mood depressed => "0.0527" | 
+scratch marks => "0.0527" | 
+nausea and vomiting => "0.0527" | 
+extreme exhaustion => "0.0527" | 
+side pain => "0.0527" | 
+worry => "0.0527" | 
+enuresis => "0.0527" | 
+homelessness => "0.0527" | 
+nervousness => "0.0527" | 
+ascites => "0.0527" | 
+pruritus => "0.0527"  
+)
+$S112 = (
+pain chest => "0.077" | 
+angina pectoris => "0.077" | 
+palpitation => "0.077" | 
+presence of q wave => "0.077" | 
+photopsia => "0.077" | 
+sweat => "0.077" | 
+sweating increased => "0.077" | 
+chest discomfort => "0.077" | 
+shortness of breath => "0.077" | 
+giddy mood => "0.077" | 
+hypokinesia => "0.077" | 
+hemiplegia => "0.077" | 
+dizziness => "0.077" 
+)
+$S113 = (
+cough => "0.0527" | 
+fever => "0.0527" | 
+decreased translucency => "0.0527" | 
+shortness of breath => "0.0527" | 
+rale => "0.0527" | 
+productive cough => "0.0527" | 
+pleuritic pain => "0.0527" | 
+yellow sputum => "0.0527" | 
+breath sounds decreased => "0.0527" | 
+chill => "0.0527" | 
+rhonchus => "0.0527" | 
+green sputum => "0.0527" | 
+non productive cough => "0.0527" | 
+wheezing => "0.0527" | 
+haemoptysis => "0.0527" | 
+distress respiratory => "0.0527" | 
+tachypnea => "0.0527" | 
+malaise => "0.0527" | 
+night sweat => "0.0527"  
+)
+$S114 = (
+pain => "0.0556" | 
+pain chest => "0.0556" | 
+burning sensation => "0.0556" | 
+hyponatremia => "0.0556" | 
+satiety early => "0.0556" | 
+throbbing sensation quality => "0.0556" | 
+chest tightness => "0.0556" | 
+sensory discomfort => "0.0556" | 
+presence of q wave => "0.0556" | 
+nausea => "0.0556" | 
+general discomfort => "0.0556" | 
+constipation => "0.0556" | 
+palpitation => "0.0556" | 
+pain abdominal => "0.0556" | 
+heartburn => "0.0556" | 
+sweat => "0.0556" | 
+sweating increased => "0.0556" | 
+asthenia => "0.0556"  
+)
+$S115 = (
+mediastinal shift => "0.0625" | 
+fever => "0.0625" | 
+clonus => "0.0625" | 
+mental status changes => "0.0625" | 
+decreased translucency => "0.0625" | 
+unresponsiveness => "0.0625" | 
+extreme exhaustion => "0.0625" | 
+stupor => "0.0625" | 
+seizure => "0.0625" | 
+transaminitis => "0.0625" | 
+hemiplegia => "0.0625" | 
+cough => "0.0625" | 
+gurgle => "0.0625" | 
+pain => "0.0625" | 
+diarrhea => "0.0625" | 
+pain abdominal => "0.0625"  
+)
+$S116 = (
+dyspnea on exertion => "0.091" | 
+syncope => "0.091" | 
+chest discomfort => "0.091" | 
+systolic murmur => "0.091" | 
+sciatica => "0.091" | 
+angina pectoris => "0.091" | 
+pain chest => "0.091" | 
+frothy sputum => "0.091" | 
+bradycardia => "0.091" | 
+shortness of breath => "0.091" | 
+pain => "0.091" 
+)
+$S117 = (
+pain chest => "0.077" | 
+shortness of breath => "0.077" | 
+dizziness => "0.077" | 
+asthenia => "0.077" | 
+fall => "0.077" | 
+syncope => "0.077" | 
+vertigo => "0.077" | 
+sweat => "0.077" | 
+sweating increased => "0.077" | 
+palpitation => "0.077" | 
+nausea => "0.077" | 
+angina pectoris => "0.077" | 
+pressure chest => "0.077"  
+)
+$S118 = (
+fall => "0.1" | 
+distended abdomen => "0.1" | 
+unsteady gait => "0.1" | 
+paresthesia => "0.1" | 
+hyponatremia => "0.1" | 
+agitation => "0.1" | 
+unconscious state => "0.1" | 
+burning sensation => "0.1" | 
+lesion => "0.1" | 
+mass of body structure => "0.1"  
+)
+$S119 = (
+fever => "0.0715" | 
+distress respiratory => "0.0715" | 
+hypotension => "0.0715" | 
+tachypnea => "0.0715" | 
+chill => "0.0715" | 
+lethargy => "0.0715" | 
+bradycardia => "0.0715" | 
+breech presentation => "0.0715" | 
+cyanosis => "0.0715" | 
+spontaneous rupture of membranes => "0.0715" | 
+haemorrhage => "0.0715" | 
+unresponsiveness => "0.0715" | 
+rale => "0.0715" | 
+apyrexial => "0.0715"  
+)
+$S120 = (
+cough => "0.0589" | 
+wheezing => "0.0589" | 
+shortness of breath => "0.0589" | 
+chest tightness => "0.0589" | 
+fever => "0.0589" | 
+throat sore => "0.0589" | 
+productive cough => "0.0589" | 
+hepatosplenomegaly => "0.0589" | 
+night sweat => "0.0589" | 
+haemoptysis => "0.0589" | 
+labored breathing => "0.0589" | 
+snuffle => "0.0589" | 
+hacking cough => "0.0589" | 
+dyspnea => "0.0589" | 
+chill => "0.0589" | 
+stridor => "0.0589" | 
+decreased body weight => "0.0589" 
+)
+$S121 = (
+loose associations => "0.0477" | 
+giddy mood => "0.0477" | 
+feeling hopeless => "0.0477" | 
+agitation => "0.0477" | 
+hallucinations auditory => "0.0477" | 
+irritable mood => "0.0477" | 
+sleeplessness => "0.0477" | 
+neologism => "0.0477" | 
+homicidal thoughts => "0.0477" | 
+disturbed family => "0.0477" | 
+worry => "0.0477" | 
+decompensation => "0.0477" | 
+verbally abusive behavior => "0.0477" | 
+catatonia => "0.0477" | 
+suicidal => "0.0477" | 
+terrify => "0.0477" | 
+blackout => "0.0477" | 
+weepiness => "0.0477" | 
+impaired cognition => "0.0477" | 
+irritable mood => "0.0477" | 
+agitation => "0.0477" 
+)
+$S122 = (
+cough => "0.0358" | 
+throat sore => "0.0358" | 
+wheezing => "0.0358" | 
+shortness of breath => "0.0358" | 
+labored breathing => "0.0358" | 
+fever => "0.0358" | 
+stuffy nose => "0.0358" | 
+non productive cough => "0.0358" | 
+snuffle => "0.0358" | 
+indifferent mood => "0.0358" | 
+egophony => "0.0358" | 
+barking cough => "0.0358" | 
+polymyalgia => "0.0358" | 
+pleuritic pain => "0.0358" | 
+night sweat => "0.0358" | 
+dyspnea => "0.0358" | 
+productive cough => "0.0358" | 
+decreased translucency => "0.0358" | 
+rhonchus => "0.0358" | 
+rapid shallow breathing => "0.0358" | 
+apyrexial => "0.0358" | 
+noisy respiration => "0.0358" | 
+nasal discharge present => "0.0358" | 
+emphysematous change => "0.0358" | 
+frail => "0.0358" | 
+cystic lesion => "0.0358" | 
+symptom aggravating factors => "0.0358" | 
+hemodynamically stable => "0.0358" 
+)
+$S123 = (
+fever => "0.0556" | 
+fall => "0.0556" | 
+unresponsiveness => "0.0556" | 
+lethargy => "0.0556" | 
+agitation => "0.0556" | 
+ecchymosis => "0.0556" | 
+syncope => "0.0556" | 
+rale => "0.0556" | 
+unconscious state => "0.0556" | 
+cough => "0.0556" | 
+bedridden => "0.0556" | 
+bedridden => "0.0556" | 
+pain => "0.0556" | 
+facial paresis => "0.0556" | 
+abdominal tenderness => "0.0556" | 
+rhonchus => "0.0556" | 
+unsteady gait => "0.0556" | 
+hallucinations auditory => "0.0556" 
+)
+$S124 = (
+polyuria => "0.0667" | 
+vomiting => "0.0667" | 
+nausea => "0.0667" | 
+pain abdominal => "0.0667" | 
+milky => "0.0667" | 
+feeling strange => "0.0667" | 
+gurgle => "0.0667" | 
+nervousness => "0.0667" | 
+abdominal tenderness => "0.0667" | 
+regurgitates after swallowing => "0.0667" | 
+vision blurred => "0.0667" | 
+urinary hesitation => "0.0667" | 
+diarrhea => "0.0667" | 
+seizure => "0.0667" | 
+aura => "0.0667" 
+)
+$S125 = (
+energy increased => "0.0667" | 
+suicidal => "0.0667" | 
+hypersomnia => "0.0667" | 
+feeling suicidal => "0.0667" | 
+blanch => "0.0667" | 
+hallucinations auditory => "0.0667" | 
+hallucinations visual => "0.0667" | 
+elation => "0.0667" | 
+verbal auditory hallucinations => "0.0667" | 
+feeling hopeless => "0.0667" | 
+difficulty => "0.0667" | 
+decompensation => "0.0667" | 
+verbally abusive behavior => "0.0667" | 
+suicidal => "0.0667" | 
+feeling suicidal => "0.0667" 
+)
+$S126 = (
+hallucinations auditory => "0.0435" | 
+sleeplessness => "0.0435" | 
+suicidal => "0.0435" | 
+motor retardation => "0.0435" | 
+weepiness => "0.0435" | 
+unable to concentrate => "0.0435" | 
+todd paralysis => "0.0435" | 
+worry => "0.0435" | 
+fatigue => "0.0435" | 
+tremor => "0.0435" | 
+alcoholic withdrawal symptoms => "0.0435" | 
+agitation => "0.0435" | 
+unresponsiveness => "0.0435" | 
+blackout => "0.0435" | 
+withdraw => "0.0435" | 
+difficulty => "0.0435" | 
+irritable mood => "0.0435" | 
+sensory discomfort => "0.0435" | 
+drowsiness => "0.0435" | 
+formication => "0.0435" | 
+unconscious state => "0.0435" | 
+fever => "0.0435" | 
+cough => "0.0435"  
+)
+$S127 = (
+fever => "0.0667" | 
+night sweat => "0.0667" | 
+spontaneous rupture of membranes => "0.0667" | 
+cough => "0.0667" | 
+decreased body weight => "0.0667" | 
+chill => "0.0667" | 
+diarrhea => "0.0667" | 
+pleuritic pain => "0.0667" | 
+patient non compliance => "0.0667" | 
+tachypnea => "0.0667" | 
+productive cough => "0.0667" | 
+muscle hypotonia => "0.0667" | 
+hypotonic => "0.0667" | 
+feeling suicidal => "0.0667" 
+)
+$S128 = (
+mental status changes => "0.1112" | 
+cachexia => "0.1112" | 
+blackout => "0.1112" | 
+orthostasis => "0.1112" | 
+orthopnea => "0.1112" | 
+night sweat => "0.1112" | 
+distress respiratory => "0.1112" | 
+anorexia => "0.1112" | 
+dysarthria => "0.1112"  
+)
+$S129 = (
+fever => "0.0667" | 
+night sweat => "0.0667" | 
+spontaneous rupture of membranes => "0.0667" | 
+cough => "0.0667" | 
+decreased body weight => "0.0667" | 
+chill => "0.0667" | 
+diarrhea => "0.0667" | 
+pleuritic pain => "0.0667" | 
+patient non compliance => "0.0667" | 
+tachypnea => "0.0667" | 
+productive cough => "0.0667" | 
+muscle hypotonia => "0.0667" | 
+hypotonic => "0.0667" | 
+feeling suicidal => "0.0667" 
+)
+$S130 = (
+fever => "0.0625" | 
+chill => "0.0625" | 
+flushing => "0.0625" | 
+unresponsiveness => "0.0625" | 
+indifferent mood => "0.0625" | 
+urinoma => "0.0625" | 
+vomiting => "0.0625" | 
+distended abdomen => "0.0625" | 
+hypoalbuminemia => "0.0625" | 
+pustule => "0.0625" | 
+prostatism => "0.0625" | 
+diarrhea => "0.0625" | 
+abdominal tenderness => "0.0625" | 
+pleuritic pain => "0.0625" | 
+decreased translucency => "0.0625" | 
+pallor => "0.0625" 
+)
+$S131 = (
+transaminitis => "0.077" | 
+splenomegaly => "0.077" | 
+night sweat => "0.077" | 
+apyrexial => "0.077" | 
+lesion => "0.077" | 
+snuffle => "0.077" | 
+chill => "0.077" | 
+cough => "0.077" | 
+monoclonal => "0.077" | 
+hypocalcemia result => "0.077" | 
+oliguria => "0.077" | 
+rhd positive => "0.077" | 
+distress respiratory => "0.077"  
+)
+$S132 = (
+inappropriate affect => "0.1112" | 
+tachypnea => "0.1112" | 
+yellow sputum => "0.1112" | 
+projectile vomiting => "0.1112" | 
+poor feeding => "0.1112" | 
+pain abdominal => "0.1112" | 
+abdominal tenderness => "0.1112" | 
+wheelchair bound => "0.1112" | 
+moan => "0.1112" 
+)
+$S133 = (
+ascites => "0.091" | 
+distended abdomen => "0.091" | 
+feeling suicidal => "0.091" | 
+cough => "0.091" | 
+ache => "0.091" | 
+macerated skin => "0.091" | 
+heavy feeling => "0.091" | 
+hallucinations auditory => "0.091" | 
+chill => "0.091" | 
+asterixis => "0.091" | 
+patient non compliance => "0.091" 
+)
+$S134 = (
+pain chest => "0.1" | 
+angina pectoris => "0.1" | 
+shortness of breath => "0.1" | 
+hypokinesia => "0.1" | 
+sweat => "0.1" | 
+sweating increased => "0.1" | 
+pressure chest => "0.1" | 
+dyspnea on exertion => "0.1" | 
+orthopnea => "0.1" | 
+chest tightness => "0.1" 
+)
+$S135 = (
+lesion => "0.0667" | 
+cough => "0.0667" | 
+lung nodule => "0.0667" | 
+shortness of breath => "0.0667" | 
+haemoptysis => "0.0667" | 
+debilitation => "0.0667" | 
+gurgle => "0.0667" | 
+ache => "0.0667" | 
+rale => "0.0667" | 
+night sweat => "0.0667" | 
+decreased translucency => "0.0667" | 
+asthenia => "0.0667" | 
+metastatic lesion => "0.0667" | 
+agitation => "0.0667" | 
+irritable mood => "0.0667"  
+)
+$S136 = (
+pain => "0.1" | 
+hemodynamically stable => "0.1" | 
+sleeplessness => "0.1" | 
+asthenia => "0.1" | 
+syncope => "0.1" | 
+swelling => "0.1" | 
+atypia => "0.1" | 
+general unsteadiness => "0.1" | 
+shortness of breath => "0.1" | 
+distended abdomen => "0.1"  
+)
+$S137 = (
+lesion => "0.0667" | 
+cough => "0.0667" | 
+lung nodule => "0.0667" | 
+shortness of breath => "0.0667" | 
+haemoptysis => "0.0667" | 
+debilitation => "0.0667" | 
+gurgle => "0.0667" | 
+ache => "0.0667" | 
+rale => "0.0667" | 
+night sweat => "0.0667" | 
+decreased translucency => "0.0667" | 
+asthenia => "0.0667" | 
+metastatic lesion => "0.0667" | 
+agitation => "0.0667" | 
+irritable mood => "0.0667"  
+)
+$S138 = (
+mass of body structure => "0.0527" | 
+pain => "0.0527" | 
+lesion => "0.0527" | 
+tumor cell invasion => "0.0527" | 
+thicken => "0.0527" | 
+decreased body weight => "0.0527" | 
+hoarseness => "0.0527" | 
+general discomfort => "0.0527" | 
+metastatic lesion => "0.0527" | 
+non productive cough => "0.0527" | 
+constipation => "0.0527" | 
+unhappy => "0.0527" | 
+paresthesia => "0.0527" | 
+gravida 0 => "0.0527" | 
+diarrhea => "0.0527" | 
+sore to touch => "0.0527" | 
+heartburn => "0.0527" | 
+nausea => "0.0527" | 
+lung nodule => "0.0527" 
+)
+$S139 = (
+unsteady gait => "0.077" | 
+withdraw => "0.077" | 
+hyponatremia => "0.077" | 
+verbally abusive behavior => "0.077" | 
+feeling suicidal => "0.077" | 
+unresponsiveness => "0.077" | 
+worry => "0.077" | 
+drowsiness => "0.077" | 
+sleepy => "0.077" | 
+hallucinations auditory => "0.077" | 
+suicidal => "0.077" | 
+fever => "0.077" | 
+diarrhea => "0.077"  
+)
+$S140 = (
+mass of body structure => "0.1112" | 
+paraparesis => "0.1112" | 
+fever => "0.1112" | 
+gravida 0 => "0.1112" | 
+pain => "0.1112" | 
+pruritus => "0.1112" | 
+mass in breast => "0.1112" | 
+vomiting => "0.1112" | 
+diarrhea => "0.1112"  
+)
+$S141 = (
+hyperkalemia => "0.1" | 
+hypotension => "0.1" | 
+hypocalcemia result => "0.1" | 
+oliguria => "0.1" | 
+hemodynamically stable => "0.1" | 
+asthenia => "0.1" | 
+hypothermia => "0.1" | 
+diarrhea => "0.1" | 
+haemorrhage => "0.1" | 
+unresponsiveness => "0.1"  
+)
+$S142 = (
+polyuria => "0.0667" | 
+polydypsia => "0.0667" | 
+shortness of breath => "0.0667" | 
+pain chest => "0.0667" | 
+asthenia => "0.0667" | 
+nausea => "0.0667" | 
+orthopnea => "0.0667" | 
+rale => "0.0667" | 
+sweat => "0.0667" | 
+sweating increased => "0.0667" | 
+unresponsiveness => "0.0667" | 
+mental status changes => "0.0667" | 
+vertigo => "0.0667" | 
+vomiting => "0.0667" | 
+labored breathing => "0.0667"  
+)
+$S143 = (
+fever => "0.0715" | 
+distress respiratory => "0.0715" | 
+hypotension => "0.0715" | 
+tachypnea => "0.0715" | 
+chill => "0.0715" | 
+lethargy => "0.0715" | 
+bradycardia => "0.0715" | 
+breech presentation => "0.0715" | 
+cyanosis => "0.0715" | 
+spontaneous rupture of membranes => "0.0715" | 
+haemorrhage => 0.0715 | 
+unresponsiveness => "0.0715" | 
+rale => "0.0715" | 
+apyrexial => "0.0715"  
+)
+$S144 = (
+pain => "0.04" | 
+mass of body structure => "0.04" | 
+lesion => "0.04" | 
+cushingoid facies => "0.04" | 
+cushingoid habitus => "0.04" | 
+emphysematous change => "0.04" | 
+decreased body weight => "0.04" | 
+ascites => "0.04" | 
+hoarseness => "0.04" | 
+thicken => "0.04" | 
+hematuria => "0.04" | 
+pulsus paradoxus => "0.04" | 
+gravida 10 => "0.04" | 
+mass of body structure => "0.04" | 
+lesion => "0.04" | 
+heartburn => "0.04" | 
+night sweat => "0.04" | 
+thicken => "0.04" | 
+chill => "0.04" | 
+decreased translucency => "0.04" | 
+pain abdominal => "0.04" | 
+dullness => "0.04" | 
+food intolerance => "0.04" | 
+distress respiratory => "0.04" | 
+hypotension => "0.04" 
+)
+$S145 = (
+asthenia => "0.1" | 
+numbness => "0.1" | 
+nausea and vomiting => "0.1" | 
+awakening early => "0.1" | 
+hydropneumothorax => "0.1" | 
+superimposition => "0.1" | 
+fatigability => "0.1" | 
+tenesmus => "0.1" | 
+pain => "0.1" | 
+slowing of urinary stream => "0.1"  
+)
+$S146 = (
+rale => "0.0834" | 
+jugular venous distention => "0.0834" | 
+hyperkalemia => "0.0834" | 
+orthopnea => "0.0834" | 
+shortness of breath => "0.0834" | 
+drowsiness => "0.0834" | 
+sleepy => "0.0834" | 
+weight gain => "0.0834" | 
+hypokalemia => "0.0834" | 
+hypotension => "0.0834" | 
+swelling => "0.0834" | 
+distended abdomen => "0.0834" 
+)
+$S147 = (
+ambidexterity => "2.0E-4" | 
+vomiting => "2.0E-4" | 
+dizziness => "2.0E-4" | 
+numbness => "2.0E-4" | 
+nausea => "2.0E-4" | 
+fever => "2.0E-4" | 
+splenomegaly => "2.0E-4"  
+)
+$S148 = (
+uncoordination => "0.0477,0.0715"
+)
+$S149 = (
+fever=>"0.0477,0.0589,0.077,0.0715,0.1,0.0715,0.0455,0.0834,0.3334,0.0556,0.0834,0.0667,0.05,0.0589,0.0834,0.0834,0.0834,0.1112,0.0667,0.0834,0.0715,0.0625,0.0834,0.1667,0.077,0.0527,0.0625,0.0715,0.0589,0.0358,0.0556,0.0435,0.0667,0.0667,0.0625,0.077,0.1112,0.0715,2.0E-4"
+)
+$S150 = ( 
+pleuritic pain => "0.0477,0.1112,0.0435,0.0625,0.0455,0.0435,0.0625,0.0667,0.0527,0.0358,0.0667,0.0667,0.0625"
+)
+$S151 = ( 
+snuffle => "0.0477,0.091,0.0589,0.0358,0.077"
+)
+$S152 = ( 
+throat sore => "0.0477,0.0625,0.0625,0.0589,0.0589,0.0358"
+)
+$S153 = ( 
+malaise => "0.0477,0.0455,0.0527"
+)
+$S154 = ( 
+debilitation => "0.0477,0.0715,0.0667,0.0667"
+)
+$S155 = ( 
+symptom aggravating factors => "0.0477,0.1112,0.0477,0.0358"
+)
+$S156 = ( 
+chill => "0.0477,0.0715,0.05,0.0455,0.0834,0.0667,0.0625,0.0625,0.0834,0.0834,0.0556,0.0667,0.0834,0.0715,0.0625,0.077,0.0527,0.0715,0.0589,0.0667,0.0667,0.0625,0.077,0.091,0.0715,0.04"
+)
+$S157 = ( 
+scleral icterus => "0.0477,0.0834"
+)
+$S158 = ( 
+dysuria => "0.0477,0.0435,0.0834,0.0435,0.05"
+)
+$S159 = ( 
+lip smacking => "0.0477,0.0589,0.0589"
+)
+$S160 = ( 
+headache => "0.0477,0.0667,0.0625,0.0589,0.0589,0.091,0.05,0.0625,0.0625,0.0556,0.0589,0.0667"
+)
+$S161 = ( 
+snore => "0.0477,0.0667,0.077"
+)
+$S162 = ( 
+green sputum => "0.0477,0.091,0.077,0.0527"
+)
+$S163 = ( 
+shortness of breath => "0.0477,0.0667,0.0589,0.0435,0.077,0.0667,0.1112,0.091,0.0625,0.1,0.0667,0.05,0.1,0.091,0.1,0.091,0.0455,0.0527,0.077,0.077,0.0715,0.0834,0.0834,0.077,0.0625,0.0589,0.0556,0.0667,0.0589,0.0715,0.091,0.0834,0.1429,0.0667,0.1112,0.1667,0.0834,0.077,0.0527,0.091,0.077,0.0589,0.0358,0.1,0.0667,0.1,0.0667,0.0667,0.0834"
+)
+$S164 = ( 
+distress respiratory => "0.0477,0.1112,0.0715,0.0625,0.1,0.0834,0.0834,0.091,0.0527,0.0715,0.1112,0.077,0.0715,0.04"
+)
+$S165 = ( 
+blackout => "0.0477,0.0589,0.0589,0.04,0.0477,0.0358,0.0834,0.0417,0.0477,0.0834,0.0477,0.0435,0.1112"
+)
+$S166 = ( 
+extreme exhaustion => "0.0477,0.0715,0.1112,0.0527,0.0625"
+)
+$S167 = ( 
+heme positive => "0.0834,0.05,0.0667"
+)
+$S168 = ( 
+pain abdominal => "0.0834,0.0667,0.0667,0.0625,0.1,0.04,0.04,0.091,0.0556,0.077,0.0834,0.0834,0.0834,0.05,0.0834,0.0556,0.0834,0.1112,0.0834,0.0667,0.077,0.0834,0.0625,0.077,0.0556,0.0625,0.0667,0.1112,0.04"
+)
+$S169 = ( 
+vomiting => "0.0834,0.0589,0.0435,0.0667,0.1,0.04,0.091,0.0455,0.077,0.0834,0.077,0.0834,0.05,0.0589,0.0834,0.0834,0.1112,0.0834,0.0667,0.0715,0.077,0.0667,0.0625,0.1112,0.0667,2.0E-4"
+)
+$S170 = ( 
+nausea => "0.0834,0.0589,0.0667,0.0667,0.1,0.04,0.0556,0.0455,0.0667,0.0834,0.0834,0.0834,0.1112,0.0834,0.0667,0.0834,0.0625,0.077,0.0556,0.077,0.0667,0.0527,0.0667,2.0E-4"
+)
+$S171 = ( 
+intoxication => "0.0834,0.04,0.0477,0.0358,0.0834,0.0477,0.077,0.0834"
+)
+$S172 = ( 
+haemorrhage => "0.0834,0.077,0.0715,0.05,0.0667,0.0715,0.0715,0.125,0.0625,0.0556,0.1112,0.0625,0.0715,0.1,0.0715"
+)
+$S173 = ( 
+guaiac positive => "0.0834,0.0589,0.0667,0.0435,0.05,0.0455,0.0435,0.0834,0.0625"
+)
+$S174 = ( 
+pain => "0.0834,0.0667,0.0715,0.0625,0.091,0.1,0.091,0.04,0.05,0.091,0.0556,0.077,0.1,0.0667,0.0834,0.077,0.0834,0.0417,0.05,0.0589,0.0834,0.0625,0.0834,0.1112,0.0834,0.0715,0.0834,0.077,0.0667,0.0834,0.0715,0.0625,0.0625,0.077,0.0834,0.0556,0.0625,0.091,0.0556,0.1,0.0527,0.1112,0.04,0.1"
+)
+$S175 = ( 
+decreased body weight => "0.0834,0.0667,0.0625,0.091,0.0589,0.0435,0.0715,0.0834,0.0435,0.077,0.0625,0.0667,0.0625,0.0625,0.0556,0.0556,0.0589,0.077,0.0625,0.0834,0.0834,0.0589,0.0667,0.0667,0.0527,0.04"
+)
+$S176 = ( 
+sore to touch => "0.0834,0.0667,0.0667,0.091,0.1,0.0834,0.0834,0.0834,0.05,0.0834,0.1112,0.0834,0.091,0.0715,0.0834,0.0625,0.0527"
+)
+$S177 = ( 
+dizziness => "0.0834,0.0589,0.05,0.05,0.0625,0.077,0.077,2.0E-4"
+)
+$S178 = ( 
+pain chest => "0.0667,0.0625,0.0625,0.091,0.1,0.0527,0.077,0.0834,0.0417,0.0834,0.0667,0.0589,0.0667,0.0715,0.1667,0.077,0.0556,0.091,0.077,0.1,0.0667"
+)
+$S179 = ( 
+sweat => "0.0667,0.1,0.0527,0.077,0.0834,0.0589,0.0667,0.077,0.0556,0.077,0.1,0.0667"
+)
+$S180 = ( 
+sweating increased => "0.0667,0.1,0.0527,0.077,0.0834,0.0589,0.0667,0.077,0.0556,0.077,0.1,0.0667"
+)
+$S181 = ( 
+nonsmoker => "0.0667,0.091"
+)
+$S182 = ( 
+pressure chest => "0.0667,0.1,0.0527,0.077,0.0667,0.077,0.1"
+)
+$S183 = ( 
+syncope => "0.0667,0.0589,0.0589,0.0435,0.0715,0.0589,0.0527,0.0667,0.0667,0.0715,0.0556,0.091,0.077,0.0556,0.1"
+)
+$S184 = ( 
+numbness => "0.0667,0.0435,0.0589,0.125,0.1,2.0E-4"
+)
+$S185 = ( 
+chest discomfort => "0.0667,0.0527,0.0589,0.0715,0.0667,0.077,0.091"
+)
+$S186 = ( 
+st segment depression => "0.0667,0.0527"
+)
+$S187 = ( 
+worry => "0.0667,0.04,0.0477,0.0834,0.0358,0.0417,0.0477,0.0556,0.0527,0.0477,0.0435,0.077"
+)
+$S188 = ( 
+t wave inverted => "0.0667,0.0527,0.077"
+)
+$S189 = ( 
+bradycardia => "0.0667,0.0715,0.1,0.04,0.0527,0.1112,0.0667,0.0667,0.091,0.0715,0.0715"
+)
+$S190 = ( 
+dyspnea => "0.0667,0.0589,0.077,0.091,0.0834,0.0625,0.0667,0.1,0.0527,0.0834,0.0834,0.1112,0.0589,0.0477,0.0667,0.0589,0.0834,0.0715,0.091,0.0834,0.1429,0.0667,0.0589,0.0358"
+)
+$S191 = ( 
+seizure => "0.077,0.0667,0.0834,0.0667,0.125,0.05,0.077,0.0527,0.0625,0.0667"
+)
+$S192 = ( 
+aura => "0.077,0.0715,0.0667,0.0667"
+)
+$S193 = ( 
+muscle twitch => "0.077,0.0589,0.125,0.0556,0.05,0.077,0.0589"
+)
+$S194 = ( 
+drowsiness => "0.077,0.0435,0.0589,0.091,0.0715,0.0527,0.0589,0.0667,0.0556,0.0435,0.077,0.0834"
+)
+$S195 = ( 
+tremor => "0.077,0.0667,0.0589,0.04,0.0477,0.0556,0.0667,0.0358,0.05,0.0417,0.0477,0.077,0.0589,0.0556,0.0435"
+)
+$S196 = ( 
+unresponsiveness => "0.077,0.0715,0.0589,0.0625,0.0667,0.0455,0.0715,0.0715,0.0667,0.125,0.05,0.091,0.0527,0.091,0.0589,0.0556,0.0625,0.0715,0.0556,0.0435,0.0625,0.077,0.1,0.0667,0.0715"
+)
+$S197 = ( 
+hemiplegia => "0.077,0.0667,0.125,0.0589,0.0834,0.0527,0.0556,0.0625,0.077,0.0625"
+)
+$S198 = ( 
+myoclonus => "0.077,0.0589,0.0589"
+)
+$S199 = ( 
+gurgle => "0.077,0.0834,0.0625,0.0667,0.0667,0.0667"
+)
+$S200 = ( 
+sleepy => "0.077,0.0435,0.0589,0.0715,0.05,0.0527,0.091,0.0589,0.0667,0.0556,0.077,0.0834"
+)
+$S201 = ( 
+lethargy => "0.077,0.0589,0.0715,0.0834,0.05,0.077,0.0715,0.0556,0.0715"
+)
+$S202 = ( 
+wheelchair bound => "0.077,0.0556,0.1112"
+)
+$S203 = ( 
+hyperkalemia => "0.0589,0.0667,0.0455,0.0556,0.0589,0.091,0.1667,0.1,0.0834"
+)
+$S204 = ( 
+orthopnea => "0.0589,0.091,0.1,0.0455,0.0527,0.0715,0.0834,0.0625,0.0667,0.0589,0.1429,0.1112,0.1,0.0667,0.0834"
+)
+$S205 = ( 
+rale => "0.0589,0.0715,0.0435,0.0455,0.0527,0.0435,0.0834,0.0477,0.077,0.0667,0.0589,0.1429,0.0667,0.0834,0.0527,0.0715,0.0556,0.0667,0.0667,0.0667,0.0715,0.0834"
+)
+$S206 = ( 
+urgency of micturition => "0.0589,0.05,0.0834,0.0589"
+)
+$S207 = ( 
+ascites => "0.0589,0.091,0.0556,0.1,0.0834,0.0834,0.0834,0.0834,0.0834,0.0527,0.091,0.04"
+)
+$S208 = ( 
+asthenia => "0.0589,0.0589,0.0435,0.0667,0.0589,0.0435,0.091,0.05,0.0455,0.0834,0.0435,0.0667,0.125,0.05,0.0527,0.0625,0.0556,0.077,0.0667,0.1,0.0667,0.1,0.0667,0.1"
+)
+$S209 = ( 
+apyrexial => "0.0589,0.0715,0.0715,0.0667,0.0625,0.091,0.0455,0.0834,0.0625,0.05,0.0589,0.0834,0.0834,0.1112,0.0834,0.0667,0.0834,0.0625,0.0715,0.0358,0.077,0.0715"
+)
+$S210 = ( 
+mental status changes => "0.0589,0.0589,0.0435,0.0455,0.0834,0.05,0.0625,0.1112,0.0667"
+)
+$S211 = ( 
+difficulty => "0.0589,0.0435,0.0834,0.0589,0.0477,0.0358,0.0417,0.0477,0.0834,0.0556,0.0667,0.0435"
+)
+$S212 = ( 
+diarrhea => "0.0589,0.0589,0.0667,0.0435,0.04,0.0556,0.0455,0.0667,0.0435,0.0834,0.0667,0.0625,0.0625,0.05,0.0625,0.0834,0.1112,0.0834,0.0556,0.0667,0.0834,0.0625,0.0667,0.0667,0.0667,0.0625,0.0527,0.077,0.1112,0.1"
+)
+$S213 = ( 
+hypotension => "0.0589,0.0589,0.0435,0.0715,0.091,0.0715,0.0834,0.0625,0.091,0.0589,0.0834,0.1112,0.1112,0.0834,0.0715,0.1,0.0715,0.04,0.0834"
+)
+$S214 = ( 
+breath sounds decreased => "0.0589,0.0667,0.0435,0.0435,0.0625,0.1112,0.0527"
+)
+$S215 = ( 
+swelling => "0.0589,0.0834,0.05,0.0455,0.1,0.0834,0.0834,0.0667,0.0834,0.0715,0.0625,0.0834,0.1,0.0834"
+)
+$S216 = ( 
+hypokinesia => "0.0589,0.091,0.0667,0.1,0.091,0.0527,0.1,0.0715,0.0625,0.0667,0.0715,0.077,0.1"
+)
+$S217 = ( 
+lightheadedness => "0.0589,0.0715,0.0589,0.0667,0.05"
+)
+$S218 = ( 
+anorexia => "0.0589,0.091,0.0667,0.0834,0.05,0.091,0.0667,0.1112"
+)
+$S219 = ( 
+sensory discomfort => "0.0589,0.0589,0.0556,0.0435"
+)
+$S220 = ( 
+prostatism => "0.0435,0.0715,0.04,0.0715,0.1112,0.1112,0.077,0.0667,0.0625"
+)
+$S221 = ( 
+hyponatremia => "0.0435,0.0667,0.05,0.0834,0.05,0.0625,0.0834,0.0556,0.1,0.077"
+)
+$S222 = ( 
+fall => "0.0435,0.0715,0.0667,0.05,0.0834,0.0556,0.077,0.1,0.0556"
+)
+$S223 = ( 
+unsteady gait => "0.0435,0.091,0.077,0.05,0.1,0.0556,0.077"
+)
+$S224 = ( 
+polyuria => "0.0435,0.091,0.0667,0.0667"
+)
+$S225 = ( 
+nightmare => "0.0435,0.04,0.0477,0.0556,0.0417,0.0477,0.0527"
+)
+$S226 = ( 
+speech slurred => "0.0435,0.0589,0.125,0.05,0.0527"
+)
+$S227 = ( 
+weight gain => "0.0435,0.0834,0.0667,0.0834"
+)
+$S228 = ( 
+fatigue => "0.0435,0.091,0.0715,0.05,0.077,0.0715,0.125,0.0667,0.0715,0.1112,0.0625,0.0435"
+)
+$S229 = ( 
+tired => "0.0435,0.0715,0.077"
+)
+$S230 = ( 
+agitation => "0.0435,0.0589,0.04,0.0477,0.0834,0.0556,0.0358,0.1112,0.05,0.0417,0.0477,0.077,0.0556,0.0527,0.1,0.0477,0.0477,0.0556,0.0435,0.0667,0.0667"
+)
+$S231 = ( 
+motor retardation => "0.0435,0.04,0.0477,0.0358,0.0477,0.0435"
+)
+$S232 = ( 
+mass of body structure => "0.0435,0.0667,0.0625,0.091,0.0834,0.0435,0.04,0.0435,0.0556,0.0834,0.077,0.0625,0.0834,0.0556,0.0625,0.1,0.0527,0.1112,0.04,0.04"
+)
+$S233 = ( 
+fatigability => "0.0667,0.125,0.1"
+)
+$S234 = ( 
+myalgia => "0.0667,0.1112,0.0625,0.0477,0.0834,0.0556,0.0834"
+)
+$S235 = ( 
+general discomfort => "0.0667,0.091,0.04,0.0667,0.0556,0.0527"
+)
+$S236 = ( 
+dyspnea on exertion => "0.0667,0.091,0.1,0.0834,0.0477,0.0667,0.0556,0.0715,0.1112,0.091,0.1"
+)
+$S237 = ( 
+asterixis => "0.0667,0.0715,0.05,0.091"
+)
+$S238 = ( 
+numbness of hand => "0.0667,0.0715,0.091,0.0625"
+)
+$S239 = ( 
+photophobia => "0.0667,0.0625,0.0625,0.0667"
+)
+$S240 = ( 
+muscle hypotonia => "0.077,0.0667,0.0667,0.0667"
+)
+$S241 = ( 
+hypotonic => "0.077,0.0667,0.0667,0.0667"
+)
+$S242 = ( 
+heartburn => "0.077,0.0556,0.0527,0.04"
+)
+$S243 = ( 
+abnormally hard consistency => "0.077,0.0556"
+)
+$S244 = ( 
+paresthesia => "0.0667,0.0834,0.0834,0.1,0.0527"
+)
+$S245 = ( 
+dysarthria => "0.0667,0.0589,0.125,0.05,0.0527,0.1112"
+)
+$S246 = ( 
+painful swallowing => "0.0667,0.0625,0.0625,0.0477,0.0667"
+)
+$S247 = ( 
+hoarseness => "0.0667,0.091,0.0527,0.04"
+)
+$S248 = ( 
+stridor => "0.0667,0.0589"
+)
+$S249 = ( 
+spasm => "0.0667,0.0589,0.0667,0.0589"
+)
+$S250 = ( 
+ataxia => "0.0667,0.0435,0.0715,0.0435"
+)
+$S251 = ( 
+achalasia => "0.0667,0.0625,0.0556"
+)
+$S252 = ( 
+stiffness => "0.0667,0.091,0.0667,0.0556"
+)
+$S253 = ( 
+lesion=>"0.0667,0.0625,0.091,0.0834,0.0667,0.04,0.0715,0.0834,0.0556,0.0667,0.0834,0.077,0.0667,0.0625,0.1,0.077,0.0667,0.0667,0.0527,0.04,0.04"
+)
+$S254 = ( 
+side pain => "0.0667,0.0527"
+)
+$S255 = ( 
+hirsutism => "0.0715,0.0589,0.0589"
+)
+$S256 = ( 
+distended abdomen => "0.0715,0.0834,0.1,0.0625,0.091,0.1,0.0834"
+)
+$S257 = ( 
+vertigo => "0.0715,0.0589,0.0435,0.0435,0.077,0.0667"
+)
+$S258 = ( 
+out of breath => "0.0715,0.077,0.0834"
+)
+$S259 = ( 
+urge incontinence => "0.0715,0.0435,0.0435,0.0667,0.077"
+)
+$S260 = ( 
+hallucinations auditory => "0.0667,0.0589,0.04,0.0477,0.0834,0.0358,0.0417,0.0477,0.0527,0.0477,0.0556,0.0667,0.0435,0.091,0.077"
+)
+$S261 = ( 
+suicidal => "0.0667,0.0589,0.04,0.0477,0.0834,0.0358,0.0417,0.0477,0.077,0.0477,0.0667,0.0667,0.0435,0.077"
+)
+$S262 = ( 
+irritable mood => "0.0667,0.0589,0.04,0.0477,0.0834,0.0358,0.0417,0.0477,0.0527,0.0477,0.0477,0.0435,0.0667,0.0667"
+)
+$S263 = ( 
+feeling hopeless => "0.0667,0.04,0.0477,0.0667,0.1112,0.0358,0.0417,0.0477,0.077,0.0527,0.0477,0.0667"
+)
+$S264 = ( 
+feeling suicidal => "0.0667,0.0589,0.04,0.0477,0.0667,0.0358,0.077,0.0667,0.0417,0.0477,0.0667,0.0667,0.0667,0.0667,0.091,0.077"
+)
+$S265 = ( 
+neologism => "0.0667,0.0589,0.0477"
+)
+$S266 = ( 
+homelessness => "0.0667,0.0589,0.04,0.0477,0.0834,0.0358,0.0477,0.077,0.0527"
+)
+$S267 = ( 
+sleeplessness => "0.0667,0.04,0.0477,0.1112,0.0358,0.0417,0.0477,0.0527,0.0477,0.0435,0.1"
+)
+$S268 = ( 
+unconscious state => "0.0667,0.0667,0.05,0.091,0.1,0.0556,0.0435"
+)
+$S269 = ( 
+wheezing => "0.1112,0.077,0.0625,0.1,0.0834,0.0625,0.0589,0.1429,0.0527,0.0589,0.0358"
+)
+$S270 = ( 
+cough=>"0.1112,0.077,0.1,0.0556,0.1112,0.0834,0.0625,0.0667,0.1112,0.0625,0.0556,0.1429,0.0834,0.0527,0.0625,0.0589,0.0358,0.0556,0.0435,0.0667,0.0667,0.077,0.091,0.0667,0.0667"
+)
+$S271 = ( 
+chest tightness => "0.1112,0.1,0.1,0.0455,0.0527,0.0589,0.0556,0.0589,0.1"
+)
+$S272 = ( 
+non productive cough => "0.1112,0.0625,0.091,0.0625,0.0625,0.0556,0.0625,0.0834,0.0527,0.0358,0.0527"
+)
+$S273 = ( 
+productive cough => "0.1112,0.0625,0.0667,0.0667,0.0589,0.0556,0.0527,0.0589,0.0358,0.0667,0.0667"
+)
+$S274 = ( 
+tachypnea => "0.0715,0.0625,0.0667,0.1112,0.0834,0.0667,0.0589,0.0589,0.1112,0.0527,0.0715,0.0667,0.0667,0.1112,0.0715"
+)
+$S275 = ( 
+breech presentation => "0.0715,0.1112,0.077,0.0715,0.0715"
+)
+$S276 = ( 
+cyanosis => "0.0715,0.1112,0.1112,0.0715,0.0715"
+)
+$S277 = ( 
+spontaneous rupture of membranes => "0.0715,0.0834,0.0667,0.0556,0.0715,0.0667,0.0667,0.0715"
+)
+$S278 = ( 
+hallucinations visual => "0.0589,0.04,0.0477,0.0834,0.1112,0.0358,0.077,0.0417,0.0477,0.0667"
+)
+$S279 = ( 
+verbal auditory hallucinations => "0.0589,0.04,0.0477,0.0834,0.0358,0.0477,0.0667"
+)
+$S280 = ( 
+terrify => "0.0589,0.04,0.0477"
+)
+$S281 = ( 
+energy increased => "0.0589,0.04,0.0477,0.0358,0.0477,0.0667"
+)
+$S282 = ( 
+mood depressed => "0.0589,0.04,0.0477,0.077,0.0834,0.0417,0.0477,0.0527"
+)
+$S283 = ( 
+decompensation => "0.0589,0.0477,0.0667"
+)
+$S284 = ( 
+cicatrisation => "0.0589,0.0625,0.1,0.077"
+)
+$S285 = ( 
+scar tissue => "0.0589,0.077,0.0589,0.0477,0.077"
+)
+$S286 = ( 
+loose associations => "0.0589,0.0358,0.0477"
+)
+$S287 = ( 
+abscess bacterial => "0.0667,0.0667,0.0625,0.05,0.0834,0.0834,0.0715"
+)
+$S288 = ( 
+abdominal tenderness => "0.0667,0.0625,0.0625,0.05,0.0556,0.0667,0.0625,0.1112"
+)
+$S289 = ( 
+flatulence => "0.0667,0.0556,0.077"
+)
+$S290 = ( 
+constipation => "0.0667,0.04,0.0556,0.0667,0.05,0.0477,0.0667,0.077,0.0556,0.0527"
+)
+$S291 = ( 
+thicken => "0.0667,0.0625,0.091,0.04,0.0715,0.0834,0.0625,0.05,0.0556,0.0834,0.0715,0.0625,0.077,0.0527,0.04,0.04"
+)
+$S292 = ( 
+gravida 0 => "0.0667,0.1667,0.0527,0.1112"
+)
+$S293 = ( 
+hematuria => "0.0625,0.091,0.0435,0.0834,0.0435,0.0834,0.0556,0.04"
+)
+$S294 = ( 
+tumor cell invasion => "0.0625,0.0589,0.0435,0.04,0.05,0.0435,0.0834,0.0556,0.0589,0.0527"
+)
+$S295 = ( 
+metastatic lesion => "0.0625,0.04,0.0625,0.0667,0.0667,0.0527"
+)
+$S296 = ( 
+food intolerance => "0.0625,0.091,0.04,0.0625,0.04"
+)
+$S297 = ( 
+night sweat => "0.0625,0.0625,0.0667,0.0625,0.0625,0.0477,0.0625,0.0556,0.0527,0.0589,0.0358,0.0667,0.1112,0.0667,0.077,0.0667,0.0667,0.04"
+)
+$S298 = ( 
+hemianopsia homonymous => "0.0625,0.0435,0.0435"
+)
+$S299 = ( 
+satiety early => "0.0625,0.077,0.0556"
+)
+$S300 = ( 
+angina pectoris => "0.077,0.091,0.1,0.0527,0.091,0.0667,0.077,0.091,0.077,0.1"
+)
+$S301 = ( 
+unhappy => "0.077,0.0667,0.0527"
+)
+$S302 = ( 
+labored breathing => "0.077,0.091,0.0589,0.0358,0.0667"
+)
+$S303 = ( 
+hematocrit decreased => "0.077,0.0625,0.0556"
+)
+$S304 = ( 
+hypoxemia => "0.077,0.0625,0.1,0.0589"
+)
+$S305 = ( 
+renal angle tenderness => "0.077,0.0834"
+)
+$S306 = ( 
+cushingoid facies => "0.091,0.0834,0.1112,0.0834,0.125,0.0834,0.04"
+)
+$S307 = ( 
+cushingoid habitus => "0.091,0.0834,0.1112,0.0834,0.125,0.0834,0.04"
+)
+$S308 = ( 
+emphysematous change => "0.091,0.1,0.0358,0.04"
+)
+$S309 = ( 
+jugular venous distention => "0.091,0.0455,0.0834,0.0667,0.0589,0.1429,0.0834"
+)
+$S310 = ( 
+systolic ejection murmur => "0.091,0.04,0.0667"
+)
+$S311 = ( 
+mass in breast => "0.0834,0.0834,0.1112"
+)
+$S312 = ( 
+retropulsion => "0.0834,0.0834"
+)
+$S313 = ( 
+erythema => "0.0834,0.1,0.0834,0.0834,0.0667,0.0834,0.0715,0.0834"
+)
+$S314 = ( 
+estrogen use => "0.0834,0.0834,0.0834"
+)
+$S315 = ( 
+burning sensation => "0.0834,0.0625,0.0834,0.0556,0.1"
+)
+$S316 = ( 
+formication => "0.0834,0.0417,0.0834,0.0435"
+)
+$S317 = ( 
+phonophobia => "0.0589,0.0589"
+)
+$S318 = ( 
+rolling of eyes => "0.0589,0.0589"
+)
+$S319 = ( 
+moody => "0.0589,0.0667,0.0589"
+)
+$S320 = ( 
+ambidexterity => "0.0589,0.0589,2.0E-4"
+)
+$S321 = ( 
+absences finding => "0.0589,0.0715,0.0589"
+)
+$S322 = ( 
+facial paresis => "0.0589,0.125,0.091,0.0556,0.0834,0.125,0.0527,0.0834,0.0556,0.0556"
+)
+$S323 = ( 
+neck stiffness => "0.0589,0.0625,0.0556,0.1112"
+)
+$S324 = ( 
+extrapyramidal sign => "0.0589,0.0358"
+)
+$S325 = ( 
+Stahlis line => "0.0589,0.0527,0.1112"
+)
+$S326 = ( 
+vision blurred => "0.0589,0.0667"
+)
+$S327 = ( 
+room spinning => "0.0589,0.0477,0.0556"
+)
+$S328 = ( 
+dysesthesia => "0.0435,0.0435"
+)
+$S329 = ( 
+polymyalgia => "0.0435,0.0435,0.0834,0.0358"
+)
+$S330 = ( 
+passed stones => "0.0435,0.0435"
+)
+$S331 = ( 
+qt interval prolonged => "0.0435,0.0556,0.0435,0.091"
+)
+$S332 = ( 
+paresis => "0.0435,0.0435,0.0556,0.0527"
+)
+$S333 = ( 
+hemodynamically stable => "0.0435,0.091,0.0834,0.0435,0.0834,0.0834,0.0834,0.077,0.0358,0.1,0.1"
+)
+$S334 = ( 
+rhonchus => "0.0435,0.05,0.0435,0.0556,0.0589,0.0527,0.0358,0.0556"
+)
+$S335 = ( 
+orthostasis => "0.0435,0.05,0.077,0.0435,0.0556,0.1112"
+)
+$S336 = ( 
+yellow sputum => "0.0625,0.0455,0.0667,0.0556,0.0527,0.1112"
+)
+$S337 = ( 
+mediastinal shift => "0.1,0.0625"
+)
+$S338 = ( 
+impaired cognition => "0.1,0.0477"
+)
+$S339 = ( 
+sinus rhythm => "0.0667,0.0556,0.05,0.0589,0.091,0.0667"
+)
+$S340 = ( 
+general unsteadiness => "0.0667,0.1"
+)
+$S341 = ( 
+consciousness clear => "0.0667,0.04,0.0834,0.0715,0.0556,0.05,0.0417"
+)
+$S342 = ( 
+redness => "0.0667,0.1,0.0834,0.0667,0.0715,0.0625,0.0834"
+)
+$S343 = ( 
+polydypsia => "0.091,0.04,0.0715,0.0667,0.0667"
+)
+$S344 = ( 
+clonus => "0.125,0.0625,0.0527,0.0834,0.0625"
+)
+$S345 = ( 
+egophony => "0.125,0.077,0.0625,0.0358"
+)
+$S346 = ( 
+aphagia => "0.125,0.0527"
+)
+$S347 = ( 
+paralyse => "0.125,0.0527"
+)
+$S348 = ( 
+lung nodule => "0.04,0.077,0.0667,0.0667,0.0527"
+)
+$S349 = ( 
+atypia => "0.04,0.1"
+)
+$S350 = ( 
+urinary hesitation => "0.04,0.0834,0.0667,0.0667"
+)
+$S351 = ( 
+dizzy spells => "0.04,0.0667"
+)
+$S352 = ( 
+shooting pain => "0.04,0.0667"
+)
+$S353 = ( 
+hyperemesis => "0.04,0.0667"
+)
+$S354 = ( 
+transaminitis => "0.0715,0.05,0.0834,0.0625,0.0625,0.0556,0.0625,0.077"
+)
+$S355 = ( 
+hydropneumothorax => "0.0715,0.1"
+)
+$S356 = ( 
+superimposition => "0.0715,0.1"
+)
+$S357 = ( 
+haemoptysis => "0.0715,0.1112,0.0527,0.0589,0.0667,0.0667"
+)
+$S358 = ( 
+difficulty passing urine => "0.0715,0.0834,0.0834"
+)
+$S359 = ( 
+monoclonal => "0.05,0.05,0.077"
+)
+$S360 = ( 
+ecchymosis => "0.05,0.077,0.1112,0.0834,0.0556"
+)
+$S361 = ( 
+pallor => "0.05,0.0625"
+)
+$S362 = ( 
+pain back => "0.05,0.091"
+)
+$S363 = ( 
+arthralgia => "0.05,0.0477,0.0667"
+)
+$S364 = ( 
+sputum purulent => "0.1,0.0834,0.0834"
+)
+$S365 = ( 
+hypercapnia => "0.1,0.1112,0.0477"
+)
+$S366 = ( 
+patient non compliance => "0.1,0.04,0.1,0.0834,0.1112,0.0667,0.0625,0.0417,0.0625,0.0667,0.0589,0.0715,0.0667,0.0667,0.091"
+)
+$S367 = ( 
+hepatosplenomegaly => "0.091,0.0834,0.0589"
+)
+$S368 = ( 
+moan => "0.0556,0.0477,0.1112"
+)
+$S369 = ( 
+colic abdominal => "0.0556,0.125,0.05"
+)
+$S370 = ( 
+cardiovascular finding => "0.0556,0.077,0.1112"
+)
+$S371 = ( 
+cardiovascular event => "0.0556,0.077,0.1112"
+)
+$S372 = ( 
+groggy => "0.0556,0.0556"
+)
+$S373 = ( 
+catatonia => "0.04,0.0455,0.077,0.0358,0.0477"
+)
+$S374 = ( 
+weepiness => "0.04,0.0477,0.0358,0.0417,0.0477,0.0527,0.0477,0.0435"
+)
+$S375 = ( 
+withdraw => "0.04,0.0556,0.0435,0.077"
+)
+$S376 = ( 
+behavior hyperactive => "0.04,0.0358"
+)
+$S377 = ( 
+hypoalbuminemia => "0.091,0.0625"
+)
+$S378 = ( 
+pruritus => "0.091,0.0834,0.0834,0.0834,0.1112,0.0667,0.0834,0.0715,0.0527,0.1112"
+)
+$S379 = ( 
+stool color yellow => "0.091,0.125,0.1112"
+)
+$S380 = ( 
+oliguria => "0.0455,0.0715,0.0834,0.0834,0.077,0.1"
+)
+$S381 = ( 
+unable to concentrate => "0.0477,0.0477,0.0435"
+)
+$S382 = ( 
+presence of q wave => "0.0527,0.077,0.0556"
+)
+$S383 = ( 
+palpitation => "0.0527,0.0834,0.0834,0.0417,0.0834,0.0667,0.0715,0.077,0.0556,0.077"
+)
+$S384 = ( 
+has religious belief => "0.077,0.0358,0.0417,0.0477"
+)
+$S385 = ( 
+systolic murmur => "0.077,0.3334,0.091"
+)
+$S386 = ( 
+left atrial hypertrophy => "0.077,0.0667,0.0715,0.1112"
+)
+$S387 = ( 
+hot flush => "0.1,0.0417"
+)
+$S388 = ( 
+feeling strange => "0.0834,0.0667"
+)
+$S389 = ( 
+pustule => "0.0834,0.0625"
+)
+$S390 = ( 
+projectile vomiting => "0.0667,0.0834,0.1112"
+)
+$S391 = ( 
+cystic lesion => "0.0667,0.0358"
+)
+$S392 = ( 
+slowing of urinary stream => "0.0715,0.1"
+)
+$S393 = ( 
+enuresis => "0.0715,0.1112,0.05,0.0527"
+)
+$S394 = ( 
+bedridden => "0.0715,0.0715,0.1112,0.1112,0.0556,0.0556,0.0556,0.0556"
+)
+$S395 = ( 
+underweight => "0.0834,0.0834"
+)
+$S396 = ( 
+frail => "0.3334,0.0556,0.0358"
+)
+$S397 = ( 
+posturing => "0.0715,0.0625"
+)
+$S398 = ( 
+paraparesis => "0.0667,0.0834,0.1112"
+)
+$S399 = ( 
+para 1 => "0.1112,0.077"
+)
+$S400 = ( 
+disturbed family => "0.0358,0.0477"
+)
+$S401 = ( 
+hypersomnia => "0.0358,0.0667"
+)
+$S402 = ( 
+pericardial friction rub => "0.0834,0.0834"
+)
+$S403 = ( 
+cardiomegaly => "0.0834,0.0715,0.0834,0.0834"
+)
+$S404 = ( 
+pulsus paradoxus => "0.0625,0.04"
+)
+$S406 = ( 
+poor dentition => "0.0625,0.0625,0.0556"
+)
+$S407 = ( 
+adverse reaction => "0.0625,0.0625"
+)
+$S408 = ( 
+adverse effect => "0.0625,0.0625"
+)
+$S409 = ( 
+abdominal bloating => "0.0625,0.0625"
+)
+$S410 = ( 
+nervousness => "0.0417,0.0834,0.0527,0.0667"
+)
+$S411 = ( 
+splenomegaly => "0.0834,0.0556,0.0625,0.077,2.0E-4"
+)
+$S412 = ( 
+bleeding of vagina => "0.0834,0.1667"
+)
+$S413 = ( 
+dullness => "0.05,0.04"
+)
+$S414 = ( 
+fremitus => "0.0589,0.0527,0.077,0.0625"
+)
+$S415 = ( 
+hunger => "0.0834,0.0625"
+)
+$S416 = ( 
+clammy skin => "0.0477,0.091"
+)
+$S417 = ( 
+cachexia => "0.0477,0.0556,0.0556,0.1112"
+)
+$S418 = ( 
+flushing => "0.0477,0.0625"
+)
+$S419 = ( 
+tenesmus => "0.0477,0.077,0.1"
+)
+$S420 = ( 
+hypothermia => "0.091,0.0556,0.1"
+)
+$S421 = ( 
+stuffy nose => "0.077,0.0358"
+)
+$S422 = ( 
+heavy legs => "0.077,0.1112"
+)
+$S423 = ( 
+decreased stool caliber => "0.0625,0.077"
+)
+$S424 = ( 
+nausea and vomiting => "0.0625,0.077,0.0527,0.1"
+)
+$S425 = ( 
+indifferent mood => "0.0556,0.0358,0.0625"
+)
+$S426 = ( 
+hepatomegaly => "0.0556,0.0625"
+)
+$S427 = ( 
+stupor => "0.0556,0.0527,0.0625"
+)
+$S428 = ( 
+hacking cough => "0.0556,0.0589"
+)
+$S429 = ( 
+hypokalemia => "0.0556,0.0834"
+)
+$S430 = ( 
+asymptomatic => "0.0715,0.0667"
+)
+$S431 = ( 
+scratch marks => "0.0667,0.0715,0.0527"
+)
+$S432 = ( 
+decreased translucency => "0.0834,0.0527,0.0625,0.0358,0.0625,0.0667,0.0667,0.04"
+)
+$S433 = ( 
+hyperacusis => "0.0715,0.0625"
+)
+$S434 = ( 
+awakening early => "0.077,0.1"
+)
+$S435 = ( 
+giddy mood => "0.077,0.0477"
+)
+$S436 = ( 
+verbally abusive behavior => "0.0477,0.0667,0.077"
+)
+$S437 = ( 
+hypocalcemia result => "0.077,0.1"
+)
+$S438 = ( 
+ache => "0.091,0.0667,0.0667"
+)
+# Define ruleType to be over tokens
+ENV.defaults["ruleType"] = "tokens"
+
+# Define rule that
+#  upon matching pattern defined by $Color
+#  annotate matched tokens ($0) with ner="COLOR" and normalized=matched value ($$0.value)
+{ pattern: ( $S0 ), 
+  action: ( Annotate($0, ner, "influenza"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S1 ), 
+  action: ( Annotate($0, ner, "gastritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S2 ), 
+  action: ( Annotate($0, ner, "hypercholesterolemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S3 ), 
+  action: ( Annotate($0, ner, "epilepsy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S4 ), 
+  action: ( Annotate($0, ner, "insufficiency renal"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S5 ), 
+  action: ( Annotate($0, ner, "dehydration"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S6 ), 
+  action: ( Annotate($0, ner, "hypothyroidism"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S7 ), 
+  action: ( Annotate($0, ner, "hernia hiatal"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S8 ), 
+  action: ( Annotate($0, ner, "fibroid tumor"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S9 ), 
+  action: ( Annotate($0, ner, "deglutition disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S10 ), 
+  action: ( Annotate($0, ner, "osteoporosis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S11 ), 
+  action: ( Annotate($0, ner, "chronic alcoholic intoxication"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S12 ), 
+  action: ( Annotate($0, ner, "asthma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S13 ), 
+  action: ( Annotate($0, ner, "sepsis (invertebrate)"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S14 ), 
+  action: ( Annotate($0, ner, "paranoia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S15 ), 
+  action: ( Annotate($0, ner, "ileus"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S16 ), 
+  action: ( Annotate($0, ner, "neoplasm"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S17 ), 
+  action: ( Annotate($0, ner, "obesity morbid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S18 ), 
+  action: ( Annotate($0, ner, "primary malignant neoplasm"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S19 ), 
+  action: ( Annotate($0, ner, "failure heart"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S20 ), 
+  action: ( Annotate($0, ner, "malignant neoplasm of breast"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S21 ), 
+  action: ( Annotate($0, ner, "tonic clonic epilepsy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S22 ), 
+  action: ( Annotate($0, ner, "transient ischemic attack"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S23 ), 
+  action: ( Annotate($0, ner, "malignant neoplasm of prostate"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S24 ), 
+  action: ( Annotate($0, ner, "embolism pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S25 ), 
+  action: ( Annotate($0, ner, "tricuspid valve insufficiency"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S26 ), 
+  action: ( Annotate($0, ner, "respiratory failure"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S27 ), 
+  action: ( Annotate($0, ner, "degenerative polyarthritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S28 ), 
+  action: ( Annotate($0, ner, "aphasia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S29 ), 
+  action: ( Annotate($0, ner, "neoplasm metastasis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S30 ), 
+  action: ( Annotate($0, ner, "malignant tumor of colon"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S31 ), 
+  action: ( Annotate($0, ner, "lymphoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S32 ), 
+  action: ( Annotate($0, ner, "anemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S33 ), 
+  action: ( Annotate($0, ner, "chronic obstructive airway disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S34 ), 
+  action: ( Annotate($0, ner, "sickle cell anemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S35 ), 
+  action: ( Annotate($0, ner, "coronary arteriosclerosis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S36 ), 
+  action: ( Annotate($0, ner, "cholecystitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S37 ), 
+  action: ( Annotate($0, ner, "psychotic disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S38 ), 
+  action: ( Annotate($0, ner, "thrombus"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S39 ), 
+  action: ( Annotate($0, ner, "chronic kidney failure"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S40 ), 
+  action: ( Annotate($0, ner, "depressive disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S41 ), 
+  action: ( Annotate($0, ner, "myocardial infarction"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S42 ), 
+  action: ( Annotate($0, ner, "obesity"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S43 ), 
+  action: ( Annotate($0, ner, "infection urinary tract"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S44 ), 
+  action: ( Annotate($0, ner, "tachycardia sinus"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S45 ), 
+  action: ( Annotate($0, ner, "gout"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S46 ), 
+  action: ( Annotate($0, ner, "hyperglycemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S47 ), 
+  action: ( Annotate($0, ner, "diverticulosis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S48 ), 
+  action: ( Annotate($0, ner, "failure kidney"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S49 ), 
+  action: ( Annotate($0, ner, "schizophrenia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S50 ), 
+  action: ( Annotate($0, ner, "decubitus ulcer"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S51 ), 
+  action: ( Annotate($0, ner, "encephalopathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S52 ), 
+  action: ( Annotate($0, ner, "affect labile"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S53 ), 
+  action: ( Annotate($0, ner, "carcinoma prostate"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S54 ), 
+  action: ( Annotate($0, ner, "Alzheimer's disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S55 ), 
+  action: ( Annotate($0, ner, "incontinence"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S56 ), 
+  action: ( Annotate($0, ner, "hyperbilirubinemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S57 ), 
+  action: ( Annotate($0, ner, "paroxysmal dyspnea"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S58 ), 
+  action: ( Annotate($0, ner, "bipolar disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S59 ), 
+  action: ( Annotate($0, ner, "hepatitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S60 ), 
+  action: ( Annotate($0, ner, "pericardial effusion body substance"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S61 ), 
+  action: ( Annotate($0, ner, "adhesion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S62 ), 
+  action: ( Annotate($0, ner, "biliary calculus"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S63 ), 
+  action: ( Annotate($0, ner, "endocarditis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S64 ), 
+  action: ( Annotate($0, ner, "acquired immuno-deficiency syndrome"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S65 ), 
+  action: ( Annotate($0, ner, "pneumothorax"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S66 ), 
+  action: ( Annotate($0, ner, "accident cerebrovascular"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S67 ), 
+  action: ( Annotate($0, ner, "confusion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S68 ), 
+  action: ( Annotate($0, ner, "candidiasis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S69 ), 
+  action: ( Annotate($0, ner, "anxiety state"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S70 ), 
+  action: ( Annotate($0, ner, "cirrhosis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S71 ), 
+  action: ( Annotate($0, ner, "pancytopenia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S72 ), 
+  action: ( Annotate($0, ner, "oral candidiasis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S73 ), 
+  action: ( Annotate($0, ner, "diverticulitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S74 ), 
+  action: ( Annotate($0, ner, "spasm bronchial"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S75 ), 
+  action: ( Annotate($0, ner, "ulcer peptic"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S76 ), 
+  action: ( Annotate($0, ner, "depression mental"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S77 ), 
+  action: ( Annotate($0, ner, "emphysema pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S78 ), 
+  action: ( Annotate($0, ner, "hypoglycemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S79 ), 
+  action: ( Annotate($0, ner, "dependence"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S80 ), 
+  action: ( Annotate($0, ner, "osteomyelitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S81 ), 
+  action: ( Annotate($0, ner, "hemorrhoids"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S82 ), 
+  action: ( Annotate($0, ner, "primary carcinoma of the liver cells"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S83 ), 
+  action: ( Annotate($0, ner, "pyelonephritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S84 ), 
+  action: ( Annotate($0, ner, "pancreatitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S85 ), 
+  action: ( Annotate($0, ner, "cholelithiasis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S86 ), 
+  action: ( Annotate($0, ner, "cardiomyopathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S87 ), 
+  action: ( Annotate($0, ner, "Pneumocystis carinii pneumonia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S88 ), 
+  action: ( Annotate($0, ner, "carcinoma colon"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S89 ), 
+  action: ( Annotate($0, ner, "edema pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S90 ), 
+  action: ( Annotate($0, ner, "carcinoma breast"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S91 ), 
+  action: ( Annotate($0, ner, "hemiparesis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S92 ), 
+  action: ( Annotate($0, ner, "mitral valve insufficiency"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S93 ), 
+  action: ( Annotate($0, ner, "peripheral vascular disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S94 ), 
+  action: ( Annotate($0, ner, "tonic-clonic seizures"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S95 ), 
+  action: ( Annotate($0, ner, "effusion pericardial"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S96 ), 
+  action: ( Annotate($0, ner, "thrombocytopaenia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S97 ), 
+  action: ( Annotate($0, ner, "adenocarcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S98 ), 
+  action: ( Annotate($0, ner, "failure heart congestive"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S99 ), 
+  action: ( Annotate($0, ner, "exanthema"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S100 ), 
+  action: ( Annotate($0, ner, "ischemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S101 ), 
+  action: ( Annotate($0, ner, "hypertension pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S102 ), 
+  action: ( Annotate($0, ner, "infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S103 ), 
+  action: ( Annotate($0, ner, "cellulitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S104 ), 
+  action: ( Annotate($0, ner, "lymphatic diseases"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S105 ), 
+  action: ( Annotate($0, ner, "gastroenteritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S106 ), 
+  action: ( Annotate($0, ner, "parkinson disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S107 ), 
+  action: ( Annotate($0, ner, "hernia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S108 ), 
+  action: ( Annotate($0, ner, "kidney disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S109 ), 
+  action: ( Annotate($0, ner, "colitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S110 ), 
+  action: ( Annotate($0, ner, "deep vein thrombosis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S111 ), 
+  action: ( Annotate($0, ner, "personality disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S112 ), 
+  action: ( Annotate($0, ner, "hyperlipidemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S113 ), 
+  action: ( Annotate($0, ner, "pneumonia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S114 ), 
+  action: ( Annotate($0, ner, "gastroesophageal reflux disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S115 ), 
+  action: ( Annotate($0, ner, "pneumonia aspiration"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S116 ), 
+  action: ( Annotate($0, ner, "stenosis aortic valve"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S117 ), 
+  action: ( Annotate($0, ner, "hypertensive disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S118 ), 
+  action: ( Annotate($0, ner, "glaucoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S119 ), 
+  action: ( Annotate($0, ner, "septicemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S120 ), 
+  action: ( Annotate($0, ner, "bronchitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S121 ), 
+  action: ( Annotate($0, ner, "delusion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S122 ), 
+  action: ( Annotate($0, ner, "upper respiratory infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S123 ), 
+  action: ( Annotate($0, ner, "dementia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S124 ), 
+  action: ( Annotate($0, ner, "ketoacidosis diabetic"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S125 ), 
+  action: ( Annotate($0, ner, "manic disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S126 ), 
+  action: ( Annotate($0, ner, "suicide attempt"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S127 ), 
+  action: ( Annotate($0, ner, "hiv infections"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S128 ), 
+  action: ( Annotate($0, ner, "benign prostatic hypertrophy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S129 ), 
+  action: ( Annotate($0, ner, "HIV"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S130 ), 
+  action: ( Annotate($0, ner, "bacteremia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S131 ), 
+  action: ( Annotate($0, ner, "neutropenia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S132 ), 
+  action: ( Annotate($0, ner, "hepatitis B"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S133 ), 
+  action: ( Annotate($0, ner, "hepatitis C"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S134 ), 
+  action: ( Annotate($0, ner, "coronary heart disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S135 ), 
+  action: ( Annotate($0, ner, "carcinoma of lung"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S136 ), 
+  action: ( Annotate($0, ner, "arthritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S137 ), 
+  action: ( Annotate($0, ner, "malignant neoplasm of lung"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S138 ), 
+  action: ( Annotate($0, ner, "carcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S139 ), 
+  action: ( Annotate($0, ner, "delirium"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S140 ), 
+  action: ( Annotate($0, ner, "melanoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S141 ), 
+  action: ( Annotate($0, ner, "kidney failure acute"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S142 ), 
+  action: ( Annotate($0, ner, "diabetes"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S143 ), 
+  action: ( Annotate($0, ner, "systemic infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S144 ), 
+  action: ( Annotate($0, ner, "malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S145 ), 
+  action: ( Annotate($0, ner, "neuropathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S146 ), 
+  action: ( Annotate($0, ner, "overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S147 ), 
+  action: ( Annotate($0, ner, "migraine disorders"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S148 ), 
+  action: ( Annotate($0, ner, "influenza,encephalopathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S149 ), 
+  action: ( Annotate($0, ner, "influenza,dehydration,fibroid tumor,sepsis (invertebrate),tricuspid valve insufficiency,lymphoma,chronic kidney failure,infection urinary tract,decubitus ulcer,Alzheimer's disease,hepatitis,acquired immuno-deficiency syndrome,diverticulitis,spasm bronchial,osteomyelitis,pyelonephritis,pyelonephritis,thrombocytopaenia,exanthema,infection,cellulitis,lymphatic diseases,gastroenteritis,kidney disease,colitis,pneumonia,pneumonia aspiration,septicemia,bronchitis,upper respiratory infection,dementia,suicide attempt,hiv infections,HIV,bacteremia,delirium,melanoma,systemic infection,migraine disorders"), Annotate($0,normalized, $$0.value ) ) }
+
+{ pattern: ( $S150 ), 
+   action: ( Annotate($0, ner,"influenza,asthma,malignant neoplasm of prostate,embolism pulmonary,chronic kidney failure,carcinoma prostate,endocarditis,acquired immuno-deficiency syndrome,pneumonia,upper respiratory infection,hiv infections,HIV,bacteremia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S151 ), 
+   action: ( Annotate($0, ner,"influenza,sickle cell anemia,bronchitis,upper respiratory infection,neutropenia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S152 ), 
+   action: ( Annotate($0, ner,"influenza,candidiasis,oral candidiasis,spasm bronchial,bronchitis,upper respiratory infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S153 ), 
+   action: ( Annotate($0, ner,"influenza,chronic kidney failure,pneumonia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S154 ), 
+   action: ( Annotate($0, ner,"influenza,encephalopathy,carcinoma of lung,malignant neoplasm of lung"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S155 ), 
+   action: ( Annotate($0, ner,"influenza,asthma,emphysema pulmonary,upper respiratory infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S156 ), 
+   action: ( Annotate($0, ner,"influenza,sepsis (invertebrate),anemia,chronic kidney failure,hepatitis,acquired immuno-deficiency syndrome,candidiasis,oral candidiasis,pyelonephritis,pyelonephritis,Pneumocystis carinii pneumonia,exanthema,infection,cellulitis,lymphatic diseases,colitis,pneumonia,septicemia,bronchitis,hiv infections,HIV,bacteremia,neutropenia,hepatitis C,systemic infection,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S157 ), 
+   action: ( Annotate($0, ner,"influenza,gastroenteritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S158 ), 
+   action: ( Annotate($0, ner,"influenza,malignant neoplasm of prostate,infection urinary tract,carcinoma prostate,diverticulitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S159 ), 
+   action: ( Annotate($0, ner,"influenza,tonic-clonic epilepsy,tonic-clonic seizures"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S160 ), 
+   action: ( Annotate($0, ner,"influenza,hernia hiatal,neoplasm,tonic-clonic epilepsy,transient ischemic attack,sickle cell anemia,confusion,candidiasis,oral candidiasis,Pneumocystis carinii pneumonia,tonic-clonic seizures,exanthema"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S161 ), 
+   action: ( Annotate($0, ner,"influenza,respiratory failure,obesity"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S162 ), 
+   action: ( Annotate($0, ner,"influenza,sickle cell anemia,colitis,pneumonia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S163 ), 
+   action: ( Annotate($0, ner,"influenza,hypercholesterolemia,insufficiency renal,hypothyroidism,fibroid tumor,chronic alcoholic intoxication,asthma,failure heart,embolism pulmonary,tricuspid valve insufficiency,respiratory failure,anemia,chronic obstructive airway disease,sickle cell anemia,coronary arteriosclerosis,thrombus,chronic kidney failure,myocardial infarction,obesity,tachycardia sinus,failure kidney,paroxysmal dyspnea,pericardial effusion body substance,adhesion,endocarditis,spasm bronchial,primary carcinoma of the liver cells,cardiomyopathy,edema pulmonary,mitral valve insufficiency,peripheral vascular disease,effusion pericardial,failure heart congestive,ischemia,hypertension pulmonary,kidney disease,deep vein thrombosis,hyperlipidemia,pneumonia,stenosis aortic valve,hypertensive disease,bronchitis,upper respiratory infection,coronary heart disease,carcinoma of lung,arthritis,malignant neoplasm of lung,diabetes,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S164 ), 
+   action: ( Annotate($0, ner,"influenza,asthma,sepsis (invertebrate),embolism pulmonary,chronic obstructive airway disease,infection urinary tract,hepatitis,hypoglycemia,pneumonia,septicemia,benign prostatic hypertrophy,neutropenia,systemic infection,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S165 ), 
+   action: ( Annotate($0, ner,"influenza,dehydration,paranoia,psychotic disorder,depressive disorder,bipolar disorder,pericardial effusion body substance,anxiety state,depression mental,effusion pericardial,delusion,suicide attempt,benign prostatic hypertrophy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S166 ), 
+   action: ( Annotate($0, ner,"influenza,failure kidney,affect labile,personality disorder,pneumonia aspiration"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S167 ), 
+   action: ( Annotate($0, ner,"gastritis,anemia,diverticulosis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S168 ), 
+   action: ( Annotate($0, ner,"gastritis,hernia hiatal,ileus,neoplasm,tricuspid valve insufficiency,neoplasm metastasis,malignant tumor of colon,sickle cell anemia,cholecystitis,tachycardia sinus,hepatitis,biliary calculus,cirrhosis,diverticulitis,ulcer peptic,primary carcinoma of the liver cells,pyelonephritis,pancreatitis,cholelithiasis,carcinoma colon,adenocarcinoma,gastroenteritis,hernia,colitis,gastroesophageal reflux disease,pneumonia aspiration,ketoacidosis diabetic ,hepatitis B,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S169 ), 
+   action: ( Annotate($0, ner,"gastritis,dehydration,hypothyroidism,hernia hiatal,tricuspid valve insufficiency,malignant tumor of colon,thrombus,chronic kidney failure,tachycardia sinus,hepatitis,adhesion,biliary calculus,diverticulitis,spasm bronchial,ulcer peptic,pyelonephritis,pancreatitis,cholelithiasis,carcinoma colon,mitral valve insufficiency,colitis,ketoacidosis diabetic ,bacteremia,melanoma,diabetes,migraine disorders"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S170 ), 
+   action: ( Annotate($0, ner,"gastritis,dehydration,hernia hiatal,ileus,tricuspid valve insufficiency,malignant tumor of colon,cholecystitis,chronic kidney failure,diverticulosis,biliary calculus,ulcer peptic,pyelonephritis,pancreatitis,cholelithiasis,carcinoma colon,gastroenteritis,hernia,colitis,gastroesophageal reflux disease,hypertensive disease,ketoacidosis diabetic ,carcinoma,diabetes,migraine disorders"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S171 ), 
+   action: ( Annotate($0, ner,"gastritis,psychotic disorder,depressive disorder,bipolar disorder,pericardial effusion body substance,depression mental,dependence,effusion pericardial"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S172 ), 
+   action: ( Annotate($0, ner,"gastritis,fibroid tumor,sepsis (invertebrate),anemia,diverticulosis,failure kidney,encephalopathy,pancytopenia,hemorrhoids,primary carcinoma of the liver cells,thrombocytopaenia,hernia,septicemia,kidney failure acute,systemic infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S173 ), 
+   action: ( Annotate($0, ner,"gastritis,insufficiency renal,hernia hiatal,malignant neoplasm of prostate,anemia,chronic kidney failure,carcinoma prostate,cirrhosis,hemorrhoids"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S174 ), 
+   action: ( Annotate($0, ner,"gastritis,hypercholesterolemia,osteoporosis,neoplasm,primary malignant neoplasm,tricuspid valve insufficiency,degenerative polyarthritis,neoplasm metastasis,anemia,sickle cell anemia,cholecystitis,obesity,gout,diverticulosis,pericardial effusion body substance,adhesion,biliary calculus,anxiety state,diverticulitis,spasm bronchial,osteomyelitis,hemorrhoids,pyelonephritis,pancreatitis,cholelithiasis,mitral valve insufficiency,effusion pericardial,adenocarcinoma,exanthema,infection,cellulitis,lymphatic diseases,hernia,colitis,deep vein thrombosis,gastroesophageal reflux disease,pneumonia aspiration,stenosis aortic valve,dementia,arthritis,carcinoma,melanoma,malignant neoplasms,neuropathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S175 ), 
+   action: ( Annotate($0, ner,"gastritis,deglutition disorder,neoplasm,primary malignant neoplasm,tonic-clonic epilepsy,malignant neoplasm of prostate,lymphoma,hyperglycemia,carcinoma prostate,adhesion,endocarditis,acquired immuno-deficiency syndrome,candidiasis,oral candidiasis,primary carcinoma of the liver cells,Pneumocystis carinii pneumonia,tonic-clonic seizures,adenocarcinoma,lymphatic diseases,gastroenteritis,gastroenteritis,bronchitis,hiv infections,HIV,carcinoma,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S176 ), 
+   action: ( Annotate($0, ner,"gastritis,hernia hiatal,ileus,thrombus,gout,hyperglycemia,biliary calculus,cirrhosis,diverticulitis,osteomyelitis,pancreatitis,cholelithiasis,peripheral vascular disease,cellulitis,gastroenteritis,hernia,carcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S177 ), 
+   action: ( Annotate($0, ner,"gastritis,dehydration,anemia,confusion,hemorrhoids,hyperlipidemia,hypertensive disease,migraine disorders"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S178 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,neoplasm,embolism pulmonary,sickle cell anemia,coronary arteriosclerosis,myocardial infarction,obesity,paroxysmal dyspnea,anxiety state,ulcer peptic,cardiomyopathy,edema pulmonary,ischemia,cellulitis,kidney disease,hyperlipidemia,gastroesophageal reflux disease,stenosis aortic valve,hypertensive disease,coronary heart disease,diabetes"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S179 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,coronary arteriosclerosis,myocardial infarction,tachycardia sinus,paroxysmal dyspnea,edema pulmonary,ischemia,hyperlipidemia,gastroesophageal reflux disease,hypertensive disease,coronary heart disease,diabetes"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S180 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,coronary arteriosclerosis,myocardial infarction,tachycardia sinus,paroxysmal dyspnea,edema pulmonary,ischemia,hyperlipidemia,gastroesophageal reflux disease,hypertensive disease,coronary heart disease,diabetes"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S181 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,degenerative polyarthritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S182 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,coronary arteriosclerosis,myocardial infarction,tachycardia sinus,ischemia,hypertensive disease,coronary heart disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S183 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,dehydration,dehydration,hypothyroidism,osteoporosis,transient ischemic attack,myocardial infarction,incontinence,cardiomyopathy,mitral valve insufficiency,parkinson disease,stenosis aortic valve,hypertensive disease,dementia,arthritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S184 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,hypothyroidism,transient ischemic attack,accident cerebrovascular,neuropathy,migraine disorders"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S185 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,myocardial infarction,edema pulmonary,mitral valve insufficiency,ischemia,hyperlipidemia,stenosis aortic valve"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S186 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,myocardial infarction"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S187 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,psychotic disorder,depressive disorder,schizophrenia,bipolar disorder,anxiety state,depression mental,parkinson disease,personality disorder,delusion,suicide attempt,delirium"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S188 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,myocardial infarction,tachycardia sinus"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S189 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,sepsis (invertebrate),tricuspid valve insufficiency,malignant tumor of colon,myocardial infarction,hyperbilirubinemia,carcinoma colon,ischemia,stenosis aortic valve,septicemia,systemic infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S190 ), 
+   action: ( Annotate($0, ner,"hypercholesterolemia,insufficiency renal,obesity morbid,failure heart,malignant neoplasm of breast,embolism pulmonary,respiratory failure,chronic obstructive airway disease,myocardial infarction,paroxysmal dyspnea,pericardial effusion body substance,pneumothorax,spasm bronchial,emphysema pulmonary,cardiomyopathy,edema pulmonary,carcinoma breast,mitral valve insufficiency,peripheral vascular disease,effusion pericardial,failure heart congestive,ischemia,bronchitis,upper respiratory infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S191 ), 
+   action: ( Annotate($0, ner,"epilepsy,chronic alcoholic intoxication,hyperglycemia,incontinence,accident cerebrovascular,confusion,dependence,hemiparesis,pneumonia aspiration,ketoacidosis diabetic "), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S192 ), 
+   action: ( Annotate($0, ner,"epilepsy,encephalopathy,incontinence,ketoacidosis diabetic "), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S193 ), 
+   action: ( Annotate($0, ner,"epilepsy,tonic-clonic epilepsy,aphasia,Alzheimer's disease,confusion,dependence,tonic-clonic seizures"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S194 ), 
+   action: ( Annotate($0, ner,"epilepsy,hypothyroidism,tonic-clonic epilepsy,degenerative polyarthritis,encephalopathy,hemiparesis,tonic-clonic seizures,ischemia,parkinson disease,suicide attempt,delirium,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S195 ), 
+   action: ( Annotate($0, ner,"epilepsy,chronic alcoholic intoxication,tonic-clonic epilepsy,psychotic disorder,depressive disorder,Alzheimer's disease,incontinence,bipolar disorder,confusion,anxiety state,depression mental,dependence,tonic-clonic seizures,parkinson disease,suicide attempt"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S196 ), 
+   action: ( Annotate($0, ner,"epilepsy,sepsis (invertebrate),tonic-clonic epilepsy,embolism pulmonary,respiratory failure,chronic kidney failure,failure kidney,encephalopathy,incontinence,accident cerebrovascular,confusion,hypoglycemia,hemiparesis,peripheral vascular disease,tonic-clonic seizures,parkinson disease,pneumonia aspiration,septicemia,dementia,suicide attempt,bacteremia,delirium,kidney failure acute,diabetes,systemic infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S197 ), 
+   action: ( Annotate($0, ner,"epilepsy,respiratory failure,accident cerebrovascular,spasm bronchial,ulcer peptic,hemiparesis,parkinson disease,hernia,hyperlipidemia,pneumonia aspiration"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S198 ), 
+   action: ( Annotate($0, ner,"epilepsy,tonic-clonic epilepsy,tonic-clonic seizures"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S199 ), 
+   action: ( Annotate($0, ner,"epilepsy,ulcer peptic,pneumonia aspiration,ketoacidosis diabetic ,carcinoma of lung,malignant neoplasm of lung"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S200 ), 
+   action: ( Annotate($0, ner,"epilepsy,hypothyroidism,tonic-clonic epilepsy,encephalopathy,confusion,hemiparesis,peripheral vascular disease,tonic-clonic seizures,ischemia,parkinson disease,delirium,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S201 ), 
+   action: ( Annotate($0, ner,"epilepsy,dehydration,sepsis (invertebrate),infection urinary tract,confusion,dependence,septicemia,dementia,systemic infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S202 ), 
+   action: ( Annotate($0, ner,"epilepsy,Alzheimer's disease,hepatitis B"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S203 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,respiratory failure,chronic kidney failure,Alzheimer's disease,edema pulmonary,peripheral vascular disease,kidney disease,kidney failure acute,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S204 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,failure heart,coronary arteriosclerosis,chronic kidney failure,myocardial infarction,failure kidney,paroxysmal dyspnea,endocarditis,cardiomyopathy,edema pulmonary,failure heart congestive,benign prostatic hypertrophy,coronary heart disease,diabetes,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S205 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,sepsis (invertebrate),malignant neoplasm of prostate,chronic kidney failure,myocardial infarction,carcinoma prostate,paroxysmal dyspnea,emphysema pulmonary,dependence,cardiomyopathy,edema pulmonary,failure heart congestive,ischemia,deep vein thrombosis,pneumonia,septicemia,dementia,carcinoma of lung,malignant neoplasm of lung,diabetes,systemic infection,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S206 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,diverticulitis,pyelonephritis,edema pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S207 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,primary malignant neoplasm,cholecystitis,gout,hyperglycemia,hepatitis,biliary calculus,cirrhosis,cholelithiasis,personality disorder,hepatitis C,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S208 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,dehydration,hypothyroidism,deglutition disorder,transient ischemic attack,malignant neoplasm of prostate,degenerative polyarthritis,anemia,chronic kidney failure,infection urinary tract,carcinoma prostate,incontinence,accident cerebrovascular,confusion,hemiparesis,hernia,gastroesophageal reflux disease,hypertensive disease,carcinoma of lung,arthritis,malignant neoplasm of lung,kidney failure acute,diabetes,neuropathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S209 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,osteoporosis,sepsis (invertebrate),ileus,embolism pulmonary,sickle cell anemia,chronic kidney failure,biliary calculus,endocarditis,diverticulitis,spasm bronchial,ulcer peptic,osteomyelitis,pancreatitis,cholelithiasis,exanthema,infection,hernia,septicemia,upper respiratory infection,neutropenia,systemic infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S210 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,dehydration,hypothyroidism,chronic kidney failure,infection urinary tract,confusion,pneumonia aspiration,benign prostatic hypertrophy,diabetes"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S211 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,hypothyroidism,malignant neoplasm of breast,transient ischemic attack,depressive disorder,bipolar disorder,anxiety state,depression mental,carcinoma breast,parkinson disease,manic disorder,suicide attempt"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S212 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,dehydration,ileus,malignant neoplasm of prostate,malignant tumor of colon,cholecystitis,chronic kidney failure,diverticulosis,carcinoma prostate,biliary calculus,acquired immuno-deficiency syndrome,candidiasis,oral candidiasis,diverticulitis,hemorrhoids,pyelonephritis,pancreatitis,cholelithiasis,Pneumocystis carinii pneumonia,carcinoma colon,infection,pneumonia aspiration,ketoacidosis diabetic ,hiv infections,HIV,bacteremia,carcinoma,delirium,melanoma,kidney failure acute"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S213 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,dehydration,hypothyroidism,sepsis (invertebrate),failure heart,failure kidney,pericardial effusion body substance,endocarditis,hypoglycemia,edema pulmonary,effusion pericardial,thrombocytopaenia,hypertension pulmonary,deep vein thrombosis,septicemia,kidney failure acute,systemic infection,malignant neoplasms,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S214 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,chronic alcoholic intoxication,malignant neoplasm of prostate,carcinoma prostate,endocarditis,hypertension pulmonary,pneumonia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S215 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,malignant neoplasm of breast,anemia,chronic kidney failure,gout,osteomyelitis,carcinoma breast,exanthema,infection,cellulitis,lymphatic diseases,deep vein thrombosis,arthritis,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S216 ), 
+   action: ( Annotate($0, ner,"insufficiency renal,failure heart,respiratory failure,coronary arteriosclerosis,thrombus,myocardial infarction,gout,encephalopathy,endocarditis,cardiomyopathy,mitral valve insufficiency,hyperlipidemia,coronary heart disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S217 ), 
+   action: ( Annotate($0, ner,"dehydration,osteoporosis,transient ischemic attack,diverticulosis,confusion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S218 ), 
+   action: ( Annotate($0, ner,"dehydration,thrombus,diverticulosis,hepatitis,diverticulitis,peripheral vascular disease,ischemia,benign prostatic hypertrophy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S219 ), 
+   action: ( Annotate($0, ner,"dehydration,spasm bronchial,gastroesophageal reflux disease,suicide attempt"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S220 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,osteoporosis,malignant tumor of colon,failure kidney,affect labile,pneumothorax,dependence,carcinoma colon,bacteremia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S221 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,hernia hiatal,anemia,infection urinary tract,confusion,hemorrhoids,gastroenteritis,gastroesophageal reflux disease,glaucoma,delirium"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S222 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,osteoporosis,incontinence,confusion,cirrhosis,parkinson disease,hypertensive disease,glaucoma,dementia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S223 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,degenerative polyarthritis,adhesion,diverticulitis,glaucoma,dementia,delirium"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S224 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,hypoglycemia,ketoacidosis diabetic ,diabetes"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S225 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,psychotic disorder,depressive disorder,Alzheimer's disease,anxiety state,depression mental,personality disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S226 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,transient ischemic attack,accident cerebrovascular,confusion,hemiparesis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S227 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,paroxysmal dyspnea,cardiomyopathy,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S228 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,failure heart,lymphoma,anemia,obesity,failure kidney,pancytopenia,cardiomyopathy,mitral valve insufficiency,thrombocytopaenia,lymphatic diseases,suicide attempt"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S229 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,lymphoma,obesity"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S230 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,paranoia,psychotic disorder,depressive disorder,schizophrenia,Alzheimer's disease,bipolar disorder,pneumothorax,confusion,anxiety state,depression mental,dependence,parkinson disease,personality disorder,glaucoma,delusion,delusion,dementia,suicide attempt,carcinoma of lung,malignant neoplasm of lung"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S231 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,psychotic disorder,depressive disorder,bipolar disorder,depression mental,suicide attempt"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S232 ), 
+   action: ( Annotate($0, ner,"hypothyroidism,ileus,neoplasm,primary malignant neoplasm,malignant neoplasm of breast,malignant neoplasm of prostate,neoplasm metastasis,carcinoma prostate,primary carcinoma of the liver cells,carcinoma breast,adenocarcinoma,lymphatic diseases,gastroenteritis,parkinson disease,hernia,glaucoma,carcinoma,melanoma,malignant neoplasms,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S233 ), 
+   action: ( Annotate($0, ner,"hernia hiatal,pancytopenia,neuropathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S234 ), 
+   action: ( Annotate($0, ner,"hernia hiatal,hyperbilirubinemia,endocarditis,emphysema pulmonary,pyelonephritis,Pneumocystis carinii pneumonia,gastroenteritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S235 ), 
+   action: ( Annotate($0, ner,"hernia hiatal,degenerative polyarthritis,malignant tumor of colon,carcinoma colon,gastroesophageal reflux disease,carcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S236 ), 
+   action: ( Annotate($0, ner,"hernia hiatal,failure heart,coronary arteriosclerosis,paroxysmal dyspnea,emphysema pulmonary,cardiomyopathy,Pneumocystis carinii pneumonia,mitral valve insufficiency,hypertension pulmonary,stenosis aortic valve,coronary heart disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S237 ), 
+   action: ( Annotate($0, ner,"hernia hiatal,encephalopathy,confusion,hepatitis C"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S238 ), 
+   action: ( Annotate($0, ner,"hernia hiatal,osteoporosis,degenerative polyarthritis,hemorrhoids"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S239 ), 
+   action: ( Annotate($0, ner,"hernia hiatal,candidiasis,oral candidiasis,exanthema"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S240 ), 
+   action: ( Annotate($0, ner,"fibroid tumor,acquired immuno-deficiency syndrome,hiv infections,HIV"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S241 ), 
+   action: ( Annotate($0, ner,"fibroid tumor,acquired immuno-deficiency syndrome,hiv infections,HIV"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S242 ), 
+   action: ( Annotate($0, ner,"fibroid tumor,gastroesophageal reflux disease,carcinoma,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S243 ), 
+   action: ( Annotate($0, ner,"fibroid tumor,cholecystitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S244 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,malignant neoplasm of breast,carcinoma breast,glaucoma,carcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S245 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,transient ischemic attack,accident cerebrovascular,confusion,hemiparesis,benign prostatic hypertrophy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S246 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,candidiasis,oral candidiasis,emphysema pulmonary,exanthema"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S247 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,primary malignant neoplasm,carcinoma,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S248 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,bronchitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S249 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,tonic-clonic epilepsy,incontinence,tonic-clonic seizures"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S250 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,malignant neoplasm of prostate,lymphoma,carcinoma prostate"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S251 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,hemorrhoids,parkinson disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S252 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,degenerative polyarthritis,incontinence,parkinson disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S253 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,neoplasm,primary malignant neoplasm,malignant neoplasm of breast,respiratory failure,malignant tumor of colon,lymphoma,cirrhosis,primary carcinoma of the liver cells,carcinoma colon,carcinoma breast,adenocarcinoma,exanthema,lymphatic diseases,glaucoma,neutropenia,carcinoma of lung,malignant neoplasm of lung,carcinoma,malignant neoplasms,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S254 ), 
+   action: ( Annotate($0, ner,"deglutition disorder,personality disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S255 ), 
+   action: ( Annotate($0, ner,"osteoporosis,tonic-clonic epilepsy,tonic-clonic seizures"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S256 ), 
+   action: ( Annotate($0, ner,"osteoporosis,cirrhosis,glaucoma,bacteremia,hepatitis C,arthritis,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S257 ), 
+   action: ( Annotate($0, ner,"osteoporosis,transient ischemic attack,malignant neoplasm of prostate,carcinoma prostate,hypertensive disease,diabetes"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S258 ), 
+   action: ( Annotate($0, ner,"osteoporosis,obesity morbid,ulcer peptic"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S259 ), 
+   action: ( Annotate($0, ner,"osteoporosis,malignant neoplasm of prostate,carcinoma prostate,incontinence,colitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S260 ), 
+   action: ( Annotate($0, ner,"chronic alcoholic intoxication,paranoia,psychotic disorder,depressive disorder,schizophrenia,bipolar disorder,anxiety state,depression mental,personality disorder,delusion,dementia,manic disorder,suicide attempt,hepatitis C,delirium"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S261 ), 
+   action: ( Annotate($0, ner,"chronic alcoholic intoxication,paranoia,psychotic disorder,depressive disorder,schizophrenia,bipolar disorder,anxiety state,depression mental,dependence,delusion,manic disorder,manic disorder,suicide attempt,delirium"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S262 ), 
+   action: ( Annotate($0, ner,"chronic alcoholic intoxication,paranoia,psychotic disorder,depressive disorder,schizophrenia,bipolar disorder,anxiety state,depression mental,personality disorder,delusion,delusion,suicide attempt,carcinoma of lung,malignant neoplasm of lung"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S263 ), 
+   action: ( Annotate($0, ner,"chronic alcoholic intoxication,psychotic disorder,depressive disorder,diverticulosis,affect labile,bipolar disorder,anxiety state,depression mental,dependence,personality disorder,delusion,manic disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S264 ), 
+   action: ( Annotate($0, ner,"chronic alcoholic intoxication,paranoia,psychotic disorder,depressive disorder,diverticulosis,bipolar disorder,adhesion,acquired immuno-deficiency syndrome,anxiety state,depression mental,manic disorder,manic disorder,hiv infections,HIV,hepatitis C,delirium"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S265 ), 
+   action: ( Annotate($0, ner,"chronic alcoholic intoxication,paranoia,delusion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S266 ), 
+   action: ( Annotate($0, ner,"chronic alcoholic intoxication,paranoia,psychotic disorder,depressive disorder,schizophrenia,bipolar disorder,depression mental,dependence,personality disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S267 ), 
+   action: ( Annotate($0, ner,"chronic alcoholic intoxication,psychotic disorder,depressive disorder,affect labile,bipolar disorder,anxiety state,depression mental,personality disorder,delusion,suicide attempt,arthritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S268 ), 
+   action: ( Annotate($0, ner,"chronic alcoholic intoxication,incontinence,confusion,hypoglycemia,glaucoma,dementia,suicide attempt"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S269 ), 
+   action: ( Annotate($0, ner,"asthma,obesity morbid,embolism pulmonary,chronic obstructive airway disease,hyperglycemia,hemorrhoids,edema pulmonary,failure heart congestive,pneumonia,bronchitis,upper respiratory infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S270 ), 
+   action: ( Annotate($0, ner,"asthma,obesity morbid,chronic obstructive airway disease,Alzheimer's disease,hyperbilirubinemia,paroxysmal dyspnea,endocarditis,acquired immuno-deficiency syndrome,pneumothorax,hemorrhoids,primary carcinoma of the liver cells,failure heart congestive,infection,pneumonia,pneumonia aspiration,bronchitis,upper respiratory infection,dementia,suicide attempt,hiv infections,HIV,neutropenia,hepatitis C,carcinoma of lung,malignant neoplasm of lung"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S271 ), 
+   action: ( Annotate($0, ner,"asthma,chronic obstructive airway disease,coronary arteriosclerosis,chronic kidney failure,myocardial infarction,spasm bronchial,gastroesophageal reflux disease,bronchitis,coronary heart disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S272 ), 
+   action: ( Annotate($0, ner,"asthma,embolism pulmonary,degenerative polyarthritis,candidiasis,oral candidiasis,Pneumocystis carinii pneumonia,lymphatic diseases,deep vein thrombosis,pneumonia,upper respiratory infection,carcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S273 ), 
+   action: ( Annotate($0, ner,"asthma,embolism pulmonary,respiratory failure,acquired immuno-deficiency syndrome,spasm bronchial,Pneumocystis carinii pneumonia,pneumonia,bronchitis,upper respiratory infection,hiv infections,HIV"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S274 ), 
+   action: ( Annotate($0, ner,"sepsis (invertebrate),embolism pulmonary,respiratory failure,hyperbilirubinemia,hepatitis,acquired immuno-deficiency syndrome,spasm bronchial,edema pulmonary,thrombocytopaenia,pneumonia,septicemia,hiv infections,HIV,hepatitis B,systemic infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S275 ), 
+   action: ( Annotate($0, ner,"sepsis (invertebrate),hyperbilirubinemia,adhesion,septicemia,systemic infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S276 ), 
+   action: ( Annotate($0, ner,"sepsis (invertebrate),hyperbilirubinemia,hypertension pulmonary,septicemia,systemic infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S277 ), 
+   action: ( Annotate($0, ner,"sepsis (invertebrate),hepatitis,acquired immuno-deficiency syndrome,Pneumocystis carinii pneumonia,septicemia,hiv infections,HIV,systemic infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S278 ), 
+   action: ( Annotate($0, ner,"paranoia,psychotic disorder,depressive disorder,schizophrenia,affect labile,bipolar disorder,adhesion,anxiety state,depression mental,manic disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S279 ), 
+   action: ( Annotate($0, ner,"paranoia,psychotic disorder,depressive disorder,schizophrenia,bipolar disorder,depression mental,manic disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S280 ), 
+   action: ( Annotate($0, ner,"paranoia,psychotic disorder,delusion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S281 ), 
+   action: ( Annotate($0, ner,"paranoia,psychotic disorder,depressive disorder,bipolar disorder,depression mental,manic disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S282 ), 
+   action: ( Annotate($0, ner,"paranoia,psychotic disorder,depressive disorder,obesity,hyperglycemia,anxiety state,depression mental,personality disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S283 ), 
+   action: ( Annotate($0, ner,"paranoia,delusion,manic disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S284 ), 
+   action: ( Annotate($0, ner,"paranoia,embolism pulmonary,tricuspid valve insufficiency,adenocarcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S285 ), 
+   action: ( Annotate($0, ner,"paranoia,tachycardia sinus,spasm bronchial,emphysema pulmonary,adenocarcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S286 ), 
+   action: ( Annotate($0, ner,"paranoia,bipolar disorder,delusion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S287 ), 
+   action: ( Annotate($0, ner,"ileus,diverticulosis,endocarditis,diverticulitis,osteomyelitis,infection,cellulitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S288 ), 
+   action: ( Annotate($0, ner,"ileus,candidiasis,oral candidiasis,diverticulitis,dementia,ketoacidosis diabetic ,bacteremia,hepatitis B"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S289 ), 
+   action: ( Annotate($0, ner,"ileus,cholecystitis,adhesion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S290 ), 
+   action: ( Annotate($0, ner,"ileus,malignant tumor of colon,cholecystitis,diverticulosis,diverticulitis,emphysema pulmonary,carcinoma colon,adenocarcinoma,gastroesophageal reflux disease,carcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S291 ), 
+   action: ( Annotate($0, ner,"ileus,neoplasm,primary malignant neoplasm,neoplasm metastasis,encephalopathy,biliary calculus,endocarditis,diverticulitis,primary carcinoma of the liver cells,cholelithiasis,mitral valve insufficiency,hernia,colitis,carcinoma,malignant neoplasms,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S292 ), 
+   action: ( Annotate($0, ner,"ileus,kidney disease,carcinoma,melanoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S293 ), 
+   action: ( Annotate($0, ner,"neoplasm,primary malignant neoplasm,malignant neoplasm of prostate,infection urinary tract,carcinoma prostate,pyelonephritis,parkinson disease,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S294 ), 
+   action: ( Annotate($0, ner,"neoplasm,tonic-clonic epilepsy,malignant neoplasm of prostate,neoplasm metastasis,anemia,carcinoma prostate,cirrhosis,primary carcinoma of the liver cells,tonic-clonic seizures,carcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S295 ), 
+   action: ( Annotate($0, ner,"neoplasm,neoplasm metastasis,endocarditis,carcinoma of lung,malignant neoplasm of lung,carcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S296 ), 
+   action: ( Annotate($0, ner,"neoplasm,degenerative polyarthritis,neoplasm metastasis,hernia,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S297 ), 
+   action: ( Annotate($0, ner,"neoplasm,endocarditis,acquired immuno-deficiency syndrome,candidiasis,oral candidiasis,emphysema pulmonary,lymphatic diseases,parkinson disease,pneumonia,bronchitis,upper respiratory infection,hiv infections,benign prostatic hypertrophy,HIV,neutropenia,carcinoma of lung,malignant neoplasm of lung,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S298 ), 
+   action: ( Annotate($0, ner,"neoplasm,malignant neoplasm of prostate,carcinoma prostate"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S299 ), 
+   action: ( Annotate($0, ner,"neoplasm,adenocarcinoma,gastroesophageal reflux disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S300 ), 
+   action: ( Annotate($0, ner,"obesity morbid,failure heart,coronary arteriosclerosis,myocardial infarction,peripheral vascular disease,ischemia,hyperlipidemia,stenosis aortic valve,hypertensive disease,coronary heart disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S301 ), 
+   action: ( Annotate($0, ner,"obesity morbid,incontinence,carcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S302 ), 
+   action: ( Annotate($0, ner,"obesity morbid,peripheral vascular disease,bronchitis,upper respiratory infection,diabetes"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S303 ), 
+   action: ( Annotate($0, ner,"obesity morbid,embolism pulmonary,primary carcinoma of the liver cells"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S304 ), 
+   action: ( Annotate($0, ner,"obesity morbid,embolism pulmonary,chronic obstructive airway disease,spasm bronchial"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S305 ), 
+   action: ( Annotate($0, ner,"obesity morbid,infection urinary tract"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S306 ), 
+   action: ( Annotate($0, ner,"primary malignant neoplasm,hyperglycemia,hyperbilirubinemia,biliary calculus,pancytopenia,cholelithiasis,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S307 ), 
+   action: ( Annotate($0, ner,"primary malignant neoplasm,hyperglycemia,hyperbilirubinemia,biliary calculus,pancytopenia,cholelithiasis,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S308 ), 
+   action: ( Annotate($0, ner,"primary malignant neoplasm,gout,upper respiratory infection,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S309 ), 
+   action: ( Annotate($0, ner,"failure heart,chronic kidney failure,paroxysmal dyspnea,cardiomyopathy,edema pulmonary,failure heart congestive,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S310 ), 
+   action: ( Annotate($0, ner,"failure heart,malignant tumor of colon,carcinoma colon"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S311 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of breast,carcinoma breast,melanoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S312 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of breast,carcinoma breast"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S313 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of breast,gout,osteomyelitis,carcinoma breast,exanthema,infection,cellulitis,deep vein thrombosis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S314 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of breast,hyperglycemia,carcinoma breast"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S315 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of breast,hemorrhoids,carcinoma breast,gastroesophageal reflux disease,glaucoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S316 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of breast,anxiety state,carcinoma breast,suicide attempt"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S317 ), 
+   action: ( Annotate($0, ner,"tonic-clonic epilepsy,tonic-clonic seizures"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S318 ), 
+   action: ( Annotate($0, ner,"tonic-clonic epilepsy,tonic-clonic seizures"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S319 ), 
+   action: ( Annotate($0, ner,"tonic-clonic epilepsy,incontinence,tonic-clonic seizures"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S320 ), 
+   action: ( Annotate($0, ner,"tonic-clonic epilepsy,tonic-clonic seizures,migraine disorders"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S321 ), 
+   action: ( Annotate($0, ner,"tonic-clonic epilepsy,encephalopathy,tonic-clonic seizures"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S322 ), 
+   action: ( Annotate($0, ner,"transient ischemic attack,aphasia,thrombus,Alzheimer's disease,pericardial effusion body substance,accident cerebrovascular,hemiparesis,effusion pericardial,parkinson disease,dementia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S323 ), 
+   action: ( Annotate($0, ner,"transient ischemic attack,embolism pulmonary,Pneumocystis carinii pneumonia,hypertension pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S324 ), 
+   action: ( Annotate($0, ner,"transient ischemic attack,bipolar disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S325 ), 
+   action: ( Annotate($0, ner,"transient ischemic attack,hemiparesis,hypertension pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S326 ), 
+   action: ( Annotate($0, ner,"transient ischemic attack,ketoacidosis diabetic "), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S327 ), 
+   action: ( Annotate($0, ner,"transient ischemic attack,emphysema pulmonary,primary carcinoma of the liver cells"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S328 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of prostate,carcinoma prostate"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S329 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of prostate,carcinoma prostate,ulcer peptic,upper respiratory infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S330 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of prostate,carcinoma prostate"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S331 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of prostate,cholecystitis,carcinoma prostate,hypoglycemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S332 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of prostate,carcinoma prostate,primary carcinoma of the liver cells,hemiparesis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S333 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of prostate,thrombus,infection urinary tract,carcinoma prostate,pericardial effusion body substance,cirrhosis,effusion pericardial,colitis,upper respiratory infection,arthritis,kidney failure acute"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S334 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of prostate,anemia,carcinoma prostate,Alzheimer's disease,spasm bronchial,pneumonia,upper respiratory infection,dementia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S335 ), 
+   action: ( Annotate($0, ner,"malignant neoplasm of prostate,anemia,tachycardia sinus,carcinoma prostate,parkinson disease,benign prostatic hypertrophy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S336 ), 
+   action: ( Annotate($0, ner,"embolism pulmonary,chronic kidney failure,cardiomyopathy,Pneumocystis carinii pneumonia,pneumonia,hepatitis B"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S337 ), 
+   action: ( Annotate($0, ner,"tricuspid valve insufficiency,pneumonia aspiration"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S338 ), 
+   action: ( Annotate($0, ner,"tricuspid valve insufficiency,delusion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S339 ), 
+   action: ( Annotate($0, ner,"respiratory failure,cholecystitis,diverticulitis,edema pulmonary,peripheral vascular disease,ischemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S340 ), 
+   action: ( Annotate($0, ner,"respiratory failure,arthritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S341 ), 
+   action: ( Annotate($0, ner,"respiratory failure,psychotic disorder,infection urinary tract,encephalopathy,Alzheimer's disease,confusion,anxiety state"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S342 ), 
+   action: ( Annotate($0, ner,"respiratory failure,gout,osteomyelitis,exanthema,cellulitis,lymphatic diseases,deep vein thrombosis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S343 ), 
+   action: ( Annotate($0, ner,"degenerative polyarthritis,malignant tumor of colon,lymphoma,carcinoma colon,diabetes"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S344 ), 
+   action: ( Annotate($0, ner,"aphasia,hemorrhoids,hemiparesis,deep vein thrombosis,pneumonia aspiration"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S345 ), 
+   action: ( Annotate($0, ner,"aphasia,adenocarcinoma,lymphatic diseases,upper respiratory infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S346 ), 
+   action: ( Annotate($0, ner,"aphasia,hemiparesis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S347 ), 
+   action: ( Annotate($0, ner,"aphasia,hemiparesis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S348 ), 
+   action: ( Annotate($0, ner,"neoplasm metastasis,adhesion,carcinoma of lung,malignant neoplasm of lung,carcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S349 ), 
+   action: ( Annotate($0, ner,"neoplasm metastasis,arthritis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S350 ), 
+   action: ( Annotate($0, ner,"malignant tumor of colon,osteomyelitis,carcinoma colon,ketoacidosis diabetic "), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S351 ), 
+   action: ( Annotate($0, ner,"malignant tumor of colon,carcinoma colon"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S352 ), 
+   action: ( Annotate($0, ner,"malignant tumor of colon,carcinoma colon"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S353 ), 
+   action: ( Annotate($0, ner,"malignant tumor of colon,carcinoma colon"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S354 ), 
+   action: ( Annotate($0, ner,"lymphoma,anemia,hepatitis,candidiasis,oral candidiasis,Pneumocystis carinii pneumonia,pneumonia aspiration,neutropenia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S355 ), 
+   action: ( Annotate($0, ner,"lymphoma,neuropathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S356 ), 
+   action: ( Annotate($0, ner,"lymphoma,neuropathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S357 ), 
+   action: ( Annotate($0, ner,"lymphoma,pneumothorax,pneumonia,bronchitis,carcinoma of lung,malignant neoplasm of lung"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S358 ), 
+   action: ( Annotate($0, ner,"lymphoma,infection urinary tract,osteomyelitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S359 ), 
+   action: ( Annotate($0, ner,"anemia,diverticulitis,neutropenia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S360 ), 
+   action: ( Annotate($0, ner,"anemia,obesity,thrombocytopaenia,deep vein thrombosis,dementia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S361 ), 
+   action: ( Annotate($0, ner,"anemia,bacteremia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S362 ), 
+   action: ( Annotate($0, ner,"anemia,sickle cell anemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S363 ), 
+   action: ( Annotate($0, ner,"anemia,emphysema pulmonary,exanthema"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S364 ), 
+   action: ( Annotate($0, ner,"chronic obstructive airway disease,pericardial effusion body substance,effusion pericardial"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S365 ), 
+   action: ( Annotate($0, ner,"chronic obstructive airway disease,pneumothorax,emphysema pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S366 ), 
+   action: ( Annotate($0, ner,"chronic obstructive airway disease,psychotic disorder,gout,schizophrenia,affect labile,acquired immuno-deficiency syndrome,candidiasis,anxiety state,oral candidiasis,cardiomyopathy,edema pulmonary,cellulitis,hiv infections,HIV,hepatitis C"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S367 ), 
+   action: ( Annotate($0, ner,"sickle cell anemia,infection,bronchitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S368 ), 
+   action: ( Annotate($0, ner,"cholecystitis,emphysema pulmonary,hepatitis B"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S369 ), 
+   action: ( Annotate($0, ner,"cholecystitis,pancytopenia,diverticulitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S370 ), 
+   action: ( Annotate($0, ner,"cholecystitis,tachycardia sinus,pneumothorax"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S371 ), 
+   action: ( Annotate($0, ner,"cholecystitis,tachycardia sinus,pneumothorax"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S372 ), 
+   action: ( Annotate($0, ner,"cholecystitis,Alzheimers disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S373 ), 
+   action: ( Annotate($0, ner,"psychotic disorder,chronic kidney failure,obesity,bipolar disorder,delusion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S374 ), 
+   action: ( Annotate($0, ner,"psychotic disorder,depressive disorder,bipolar disorder,anxiety state,depression mental,personality disorder,delusion,suicide attempt"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S375 ), 
+   action: ( Annotate($0, ner,"psychotic disorder,parkinson disease,suicide attempt,delirium"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S376 ), 
+   action: ( Annotate($0, ner,"psychotic disorder,bipolar disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S377 ), 
+   action: ( Annotate($0, ner,"thrombus,bacteremia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S378 ), 
+   action: ( Annotate($0, ner,"thrombus,hyperglycemia,hepatitis,cirrhosis,thrombocytopaenia,exanthema,infection,cellulitis,personality disorder,melanoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S379 ), 
+   action: ( Annotate($0, ner,"thrombus,pancytopenia,pancreatitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S380 ), 
+   action: ( Annotate($0, ner,"chronic kidney failure,failure kidney,pericardial effusion body substance,effusion pericardial,neutropenia,kidney failure acute"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S381 ), 
+   action: ( Annotate($0, ner,"depressive disorder,depression mental,suicide attempt"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S382 ), 
+   action: ( Annotate($0, ner,"myocardial infarction,hyperlipidemia,gastroesophageal reflux disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S383 ), 
+   action: ( Annotate($0, ner,"myocardial infarction,paroxysmal dyspnea,biliary calculus,anxiety state,cholelithiasis,cardiomyopathy,mitral valve insufficiency,hyperlipidemia,gastroesophageal reflux disease,hypertensive disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S384 ), 
+   action: ( Annotate($0, ner,"obesity,bipolar disorder,anxiety state,emphysema pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S385 ), 
+   action: ( Annotate($0, ner,"obesity,decubitus ulcer,stenosis aortic valve"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S386 ), 
+   action: ( Annotate($0, ner,"tachycardia sinus,cardiomyopathy,mitral valve insufficiency,hypertension pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S387 ), 
+   action: ( Annotate($0, ner,"gout,anxiety state"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S388 ), 
+   action: ( Annotate($0, ner,"hyperglycemia,ketoacidosis diabetic "), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S389 ), 
+   action: ( Annotate($0, ner,"hyperglycemia,bacteremia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S390 ), 
+   action: ( Annotate($0, ner,"diverticulosis,hepatitis,hepatitis B"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S391 ), 
+   action: ( Annotate($0, ner,"diverticulosis,upper respiratory infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S392 ), 
+   action: ( Annotate($0, ner,"failure kidney,neuropathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S393 ), 
+   action: ( Annotate($0, ner,"failure kidney,affect labile,confusion,personality disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S394 ), 
+   action: ( Annotate($0, ner,"failure kidney,failure kidney,affect labile,affect labile,Alzheimer's disease,Alzheimer's disease,dementia,dementia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S395 ), 
+   action: ( Annotate($0, ner,"schizophrenia,schizophrenia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S396 ), 
+   action: ( Annotate($0, ner,"decubitus ulcer,Alzheimer's disease,upper respiratory infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S397 ), 
+   action: ( Annotate($0, ner,"encephalopathy,hernia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S398 ), 
+   action: ( Annotate($0, ner,"incontinence,ulcer peptic,melanoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S399 ), 
+   action: ( Annotate($0, ner,"hyperbilirubinemia,adhesion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S400 ), 
+   action: ( Annotate($0, ner,"bipolar disorder,delusion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S401 ), 
+   action: ( Annotate($0, ner,"bipolar disorder,manic disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S402 ), 
+   action: ( Annotate($0, ner,"pericardial effusion body substance,effusion pericardial"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S403 ), 
+   action: ( Annotate($0, ner,"pericardial effusion body substance,mitral valve insufficiency,effusion pericardial,deep vein thrombosis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S404 ), 
+   action: ( Annotate($0, ner,"endocarditis,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S406 ), 
+   action: ( Annotate($0, ner,"candidiasis,oral candidiasis,Pneumocystis carinii pneumonia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S407 ), 
+   action: ( Annotate($0, ner,"candidiasis,oral candidiasis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S408 ), 
+   action: ( Annotate($0, ner,"candidiasis,oral candidiasis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S409 ), 
+   action: ( Annotate($0, ner,"candidiasis,oral candidiasis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S410 ), 
+   action: ( Annotate($0, ner,"anxiety state,ulcer peptic,personality disorder,ketoacidosis diabetic "), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S411 ), 
+   action: ( Annotate($0, ner,"cirrhosis,primary carcinoma of the liver cells,lymphatic diseases,neutropenia,migraine disorders"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S412 ), 
+   action: ( Annotate($0, ner,"cirrhosis,kidney disease"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S413 ), 
+   action: ( Annotate($0, ner,"diverticulitis,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S414 ), 
+   action: ( Annotate($0, ner,"spasm bronchial,hemiparesis,adenocarcinoma,lymphatic diseases"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S415 ), 
+   action: ( Annotate($0, ner,"ulcer peptic,hemorrhoids"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S416 ), 
+   action: ( Annotate($0, ner,"emphysema pulmonary,hypoglycemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S417 ), 
+   action: ( Annotate($0, ner,"emphysema pulmonary,primary carcinoma of the liver cells,Pneumocystis carinii pneumonia,benign prostatic hypertrophy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S418 ), 
+   action: ( Annotate($0, ner,"emphysema pulmonary,bacteremia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S419 ), 
+   action: ( Annotate($0, ner,"emphysema pulmonary,colitis,neuropathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S420 ), 
+   action: ( Annotate($0, ner,"hypoglycemia,primary carcinoma of the liver cells,kidney failure acute"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S421 ), 
+   action: ( Annotate($0, ner,"dependence,upper respiratory infection"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S422 ), 
+   action: ( Annotate($0, ner,"dependence,hypertension pulmonary"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S423 ), 
+   action: ( Annotate($0, ner,"hemorrhoids,adenocarcinoma"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S424 ), 
+   action: ( Annotate($0, ner,"hemorrhoids,colitis,personality disorder,neuropathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S425 ), 
+   action: ( Annotate($0, ner,"primary carcinoma of the liver cells,upper respiratory infection,bacteremia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S426 ), 
+   action: ( Annotate($0, ner,"primary carcinoma of the liver cells,lymphatic diseases"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S427 ), 
+   action: ( Annotate($0, ner,"primary carcinoma of the liver cells,hemiparesis,pneumonia aspiration"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S428 ), 
+   action: ( Annotate($0, ner,"Pneumocystis carinii pneumonia,bronchitis"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S429 ), 
+   action: ( Annotate($0, ner,"Pneumocystis carinii pneumonia,overload fluid"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S430 ), 
+   action: ( Annotate($0, ner,"mitral valve insufficiency,ischemia"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S431 ), 
+   action: ( Annotate($0, ner,"exanthema,cellulitis,personality disorder"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S432 ), 
+   action: ( Annotate($0, ner,"infection,pneumonia,pneumonia aspiration,upper respiratory infection,bacteremia,carcinoma of lung,malignant neoplasm of lung,malignant neoplasms"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S433 ), 
+   action: ( Annotate($0, ner,"cellulitis,lymphatic diseases"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S434 ), 
+   action: ( Annotate($0, ner,"colitis,neuropathy"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S435 ), 
+   action: ( Annotate($0, ner,"hyperlipidemia,delusion"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S436 ), 
+   action: ( Annotate($0, ner,"delusion,manic disorder,delirium"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S437 ), 
+   action: ( Annotate($0, ner,"neutropenia,kidney failure acute"), Annotate($0, normalized, $$0.value ) ) }
+{ pattern: ( $S438 ), 
+   action: ( Annotate($0, ner,"hepatitis C,carcinoma of lung,malignant neoplasm of lung"), Annotate($0, normalized, $$0.value ) ) }
+
